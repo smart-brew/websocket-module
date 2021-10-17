@@ -25,6 +25,9 @@ void boot() {
 void setup() {
   boot();
 
+  // start relay
+  startRelay();
+
   // start temperature sensors
   startTempSensors();
   Serial.println("[sensors] OK");
@@ -38,6 +41,7 @@ void setup() {
 }
 
 unsigned long lastMessage = 0;
+bool openRelay = false;
 
 void loop() {
   webSocketLoop();
@@ -56,5 +60,13 @@ void loop() {
 
     // send json using WS
     webSocketSendJson(json);
+
+    if (openRelay) {
+      relayClose();
+      openRelay = false;
+    } else {
+      relayOpen();
+      openRelay = true;
+    }
   }
 }
