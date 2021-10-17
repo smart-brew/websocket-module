@@ -1,7 +1,8 @@
 #include <Arduino.h>
 #include <ArduinoJson.h>  // needs additional install
 
-#include "config.h"
+#include "config/config.hpp"
+#include "relay.hpp"
 #include "tempSensor.hpp"
 #include "webSocket.hpp"
 #include "wifi.hpp"
@@ -36,15 +37,15 @@ void setup() {
   startWS();
 }
 
-unsigned long messageTimestamp = 0;
+unsigned long lastMessage = 0;
 
 void loop() {
   webSocketLoop();
 
   uint64_t now = millis();
 
-  if (now - messageTimestamp > 1000 && wsConnected) {
-    messageTimestamp = now;
+  if (now - lastMessage > 1000 && wsConnected) {
+    lastMessage = now;
 
     // create json object
     DynamicJsonDocument json(512);

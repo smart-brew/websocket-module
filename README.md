@@ -1,6 +1,6 @@
 # websocket-module
 
-Rename `config (TEMPLATE).h` to `config.h` with correct settings
+Rename `config (TEMPLATE).h` to `config.hpp` with correct settings
 
 ## Developing
 

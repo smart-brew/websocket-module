@@ -2,6 +2,6 @@
 #include <WiFiClientSecure.h>
 #include <WiFiMulti.h>
 
-#include "config.h"
+#include "config/config.hpp"
 
 void startWifi();

@@ -2,7 +2,7 @@
 #include <ArduinoJson.h>
 #include <WebSocketsClient.h>  // source https://github.com/Links2004/arduinoWebSockets
 
-#include "config.h"
+#include "config/config.hpp"
 
 extern bool wsConnected;
 
