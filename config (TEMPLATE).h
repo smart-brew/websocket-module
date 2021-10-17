@@ -12,4 +12,4 @@
 // not working: 32
 #define SENSOR_TEMP_PIN 4
 
-#endif // CONFIG_H
+#endif  // CONFIG_H

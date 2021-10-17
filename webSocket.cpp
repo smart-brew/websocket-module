@@ -1,15 +1,12 @@
 #include "webSocket.hpp"
 
-
 // web socket
 WebSocketsClient webSocket;
 
-
 bool wsConnected = false;
 
-void webSocketEvent(WStype_t type, uint8_t * payload, size_t length) {
-
-  switch(type) {
+void webSocketEvent(WStype_t type, uint8_t *payload, size_t length) {
+  switch (type) {
     case WStype_DISCONNECTED:
       Serial.printf("[WSc] Disconnected!\n");
       wsConnected = false;
@@ -33,14 +30,13 @@ void webSocketEvent(WStype_t type, uint8_t * payload, size_t length) {
       // send data to server
       // webSocket.sendBIN(payload, length);
       break;
-    case WStype_ERROR:      
+    case WStype_ERROR:
     case WStype_FRAGMENT_TEXT_START:
     case WStype_FRAGMENT_BIN_START:
     case WStype_FRAGMENT:
     case WStype_FRAGMENT_FIN:
       break;
   }
-
 }
 
 void startWS() {
@@ -60,18 +56,16 @@ void webSocketLoop() {
   webSocket.loop();
 }
 
-
 void webSocketSendTXT(String output) {
-    webSocket.sendTXT(output);
+  webSocket.sendTXT(output);
 }
 
-
 void webSocketSendJson(DynamicJsonDocument json) {
-    String output;
-    serializeJson(json, output);
-    
-    webSocket.sendTXT(output);
-    
-    Serial.printf("[WS] Sending: ");
-    Serial.println(output);
+  String output;
+  serializeJson(json, output);
+
+  webSocket.sendTXT(output);
+
+  Serial.printf("[WS] Sending: ");
+  Serial.println(output);
 }

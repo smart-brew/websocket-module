@@ -1,12 +1,10 @@
 #include <Arduino.h>
-
-#include <ArduinoJson.h> // needs additional install
+#include <ArduinoJson.h>  // needs additional install
 
 #include "config.h"
 #include "tempSensor.hpp"
 #include "webSocket.hpp"
 #include "wifi.hpp"
-
 
 void boot() {
   Serial.begin(115200);
@@ -16,7 +14,7 @@ void boot() {
   Serial.println();
   Serial.println();
 
-  for(uint8_t t = 4; t > 0; t--) {
+  for (uint8_t t = 4; t > 0; t--) {
     Serial.printf("[SETUP] BOOT WAIT %d...\n", t);
     Serial.flush();
     delay(1000);
@@ -44,17 +42,17 @@ void loop() {
   webSocketLoop();
 
   uint64_t now = millis();
-  
-  if(now - messageTimestamp > 1000 && wsConnected) {
+
+  if (now - messageTimestamp > 1000 && wsConnected) {
     messageTimestamp = now;
 
     // create json object
     DynamicJsonDocument json(512);
     JsonObject data = json.createNestedObject(MODULE_ID);
-    
+
     // measure TEMPERATURE
     data["TEMP"] = getTemperature(0);
-    
+
     // send json using WS
     webSocketSendJson(json);
   }
