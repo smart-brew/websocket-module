@@ -64,3 +64,14 @@ void webSocketLoop() {
 void webSocketSendTXT(String output) {
     webSocket.sendTXT(output);
 }
+
+
+void webSocketSendJson(DynamicJsonDocument json) {
+    String output;
+    serializeJson(json, output);
+    
+    webSocket.sendTXT(output);
+    
+    Serial.printf("[WS] Sending: ");
+    Serial.println(output);
+}

@@ -1,8 +1,6 @@
 #include <Arduino.h>
 
-// source https://github.com/Links2004/arduinoWebSockets
-#include <WebSocketsClient.h>
-
+#include <WebSocketsClient.h> // source https://github.com/Links2004/arduinoWebSockets
 #include <ArduinoJson.h>
 
 #include "config.h"
@@ -16,3 +14,5 @@ void startWS();
 void webSocketLoop();
 
 void webSocketSendTXT(String output);
+
+void webSocketSendJson(DynamicJsonDocument json);

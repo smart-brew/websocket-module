@@ -1,22 +1,14 @@
 #include <Arduino.h>
 
-// built-in
-#include <WiFi.h>
-#include <WiFiMulti.h>
-#include <WiFiClientSecure.h>
-
-// needs install
-#include <ArduinoJson.h>
+#include <ArduinoJson.h> // needs additional install
 
 #include "config.h"
 #include "tempSensor.hpp"
 #include "webSocket.hpp"
+#include "wifi.hpp"
 
 
-// wifi
-WiFiMulti WiFiMulti;
-
-void setup() {
+void boot() {
   Serial.begin(115200);
   Serial.setDebugOutput(true);
 
@@ -29,19 +21,17 @@ void setup() {
     Serial.flush();
     delay(1000);
   }
-  
+}
+
+void setup() {
+  boot();
+
   // start temperature sensors
   startTempSensors();
   Serial.println("[sensors] OK");
 
   // wifi login
-  WiFiMulti.addAP(WIFI_SSID, WIFI_PWD);
-
-  // wait to load wifi
-  while(WiFiMulti.run() != WL_CONNECTED) {
-    Serial.println("[WIFI] Retry wifi...");
-    delay(1000);
-  }
+  startWifi();
   Serial.println("[WIFI] WiFi connected");
 
   // start websocket client
@@ -65,12 +55,7 @@ void loop() {
     // measure TEMPERATURE
     data["TEMP"] = getTemperature(0);
     
-    // json -> string
-    String output;
-    serializeJson(json, output);
-    
-    webSocketSendTXT(output);
-    Serial.printf("[WS] Sending: ");
-    Serial.println(output);
+    // send json using WS
+    webSocketSendJson(json);
   }
 }
