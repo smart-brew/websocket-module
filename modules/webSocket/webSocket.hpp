@@ -1,10 +1,12 @@
+#pragma once
+
 #include <Arduino.h>
 #include <ArduinoJson.h>
 #include <WebSocketsClient.h>  // source https://github.com/Links2004/arduinoWebSockets
 
-#include "config/config.hpp"
+#include "../../config/config.hpp"
 
-extern bool wsConnected;
+extern bool WS_CONNECTED;
 
 void webSocketEvent(WStype_t type, uint8_t *payload, size_t length);
 

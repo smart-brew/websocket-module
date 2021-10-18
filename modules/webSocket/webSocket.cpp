@@ -3,17 +3,17 @@
 // web socket
 WebSocketsClient webSocket;
 
-bool wsConnected = false;
+bool WS_CONNECTED = false;
 
 void webSocketEvent(WStype_t type, uint8_t *payload, size_t length) {
   switch (type) {
     case WStype_DISCONNECTED:
       Serial.printf("[WSc] Disconnected!\n");
-      wsConnected = false;
+      WS_CONNECTED = false;
       break;
     case WStype_CONNECTED:
       Serial.printf("[WSc] Connected to url: %s\n", payload);
-      wsConnected = true;
+      WS_CONNECTED = true;
 
       // send message to server when Connected
       webSocket.sendTXT(MODULE_ID);
@@ -49,7 +49,7 @@ void startWS() {
   // try every 5000 again if connection has failed
   webSocket.setReconnectInterval(5000);
 
-  wsConnected = false;
+  WS_CONNECTED = false;
 }
 
 void webSocketLoop() {

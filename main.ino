@@ -2,10 +2,10 @@
 #include <ArduinoJson.h>  // needs additional install
 
 #include "config/config.hpp"
-#include "relay.hpp"
-#include "tempSensor.hpp"
-#include "webSocket.hpp"
-#include "wifi.hpp"
+#include "modules/relay/relay.hpp"
+#include "modules/tempSensor/tempSensor.hpp"
+#include "modules/webSocket/webSocket.hpp"
+#include "modules/wifi/wifi.hpp"
 
 void boot() {
   Serial.begin(115200);
@@ -41,14 +41,13 @@ void setup() {
 }
 
 unsigned long lastMessage = 0;
-bool openRelay = false;
 
 void loop() {
   webSocketLoop();
 
   uint64_t now = millis();
 
-  if (now - lastMessage > 1000 && wsConnected) {
+  if (now - lastMessage > 1000 && WS_CONNECTED) {
     lastMessage = now;
 
     // create json object
@@ -58,15 +57,8 @@ void loop() {
     // measure TEMPERATURE
     data["TEMP"] = getTemperature(0);
 
-    if (openRelay) {
-      relayClose();
-      openRelay = false;
-      data["RELAY"] = 0;
-    } else {
-      relayOpen();
-      openRelay = true;
-      data["RELAY"] = 1;
-    }
+    // get RELAY status
+    data["RELAY"] = RELAY_OPEN;
 
     // send json using WS
     webSocketSendJson(json);
