@@ -58,15 +58,17 @@ void loop() {
     // measure TEMPERATURE
     data["TEMP"] = getTemperature(0);
 
-    // send json using WS
-    webSocketSendJson(json);
-
     if (openRelay) {
       relayClose();
       openRelay = false;
+      data["RELAY"] = 0;
     } else {
       relayOpen();
       openRelay = true;
+      data["RELAY"] = 1;
     }
+
+    // send json using WS
+    webSocketSendJson(json);
   }
 }
