@@ -2,10 +2,13 @@
 #include <ArduinoJson.h>  // needs additional install
 
 #include "config/config.hpp"
-#include "modules/relay/relay.hpp"
-#include "modules/tempSensor/tempSensor.hpp"
-#include "modules/webSocket/webSocket.hpp"
-#include "modules/wifi/wifi.hpp"
+#include "relay.hpp"
+#include "tempLogic.hpp"
+#include "tempSensor.hpp"
+#include "webSocket.hpp"
+#include "wifi.hpp"
+
+TempRegulator tempRegulator(0);
 
 void boot() {
   Serial.begin(115200);
@@ -56,6 +59,15 @@ void loop() {
 
     // measure TEMPERATURE
     data["TEMP"] = getTemperature(0);
+
+    // TEST - start temp regulation when 25 degrees or more
+    if (!tempRegulator.isEnabled() && getTemperature(0) > 25) {
+      tempRegulator.enable(true);
+      tempRegulator.setTemperature(30);
+    }
+
+    data["TEMP_REGULATOR_ENABLED"] = tempRegulator.isEnabled();
+    data["TEMP_REGULATOR_DONE"] = tempRegulator.loop();
 
     // get RELAY status
     data["RELAY"] = RELAY_OPEN;

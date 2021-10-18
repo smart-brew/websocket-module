@@ -1,9 +1,7 @@
-#pragma once
-
 #include <Arduino.h>
 #include <HardwareSerial.h>
 
-#include "../../config/config.hpp"
+#include "config/config.hpp"
 
 extern bool RELAY_OPEN;
 

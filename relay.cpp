@@ -4,6 +4,7 @@ bool RELAY_OPEN = false;
 
 void startRelay() {
   Serial2.begin(9600, SERIAL_8N1, RELAY_RX, RELAY_TX);
+  relayClose();
 }
 
 void relayOpen() {
