@@ -3,14 +3,14 @@
 OneWire oneWire(SENSOR_TEMP_PIN);
 
 // Pass our oneWire reference to Dallas Temperature sensor
-DallasTemperature sensors(&oneWire);
+DallasTemperature sensors1(&oneWire);
 
 void startTempSensors() {
   // start temperature sensors
-  sensors.begin();
+  sensors1.begin();
 }
 
 float getTemperature(int sensorId) {
-  sensors.requestTemperatures();
-  return sensors.getTempCByIndex(sensorId);
+  sensors1.requestTemperatures();
+  return sensors1.getTempCByIndex(sensorId);
 }

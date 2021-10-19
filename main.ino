@@ -3,6 +3,7 @@
 
 #include "config/config.hpp"
 #include "relay.hpp"
+#include "sensor.hpp"
 #include "servo.hpp"
 #include "tempLogic.hpp"
 #include "tempSensor.hpp"
@@ -10,7 +11,9 @@
 #include "wifi.hpp"
 
 TempRegulator tempRegulator(0);
-ServoMotor servoMotor(27);
+ServoMotor servoMotor(27, "SERVO_1");
+
+static std::vector<std::reference_wrapper<Sensor>> sensors;
 
 void boot() {
   Serial.begin(115200);
@@ -31,7 +34,11 @@ void setup() {
   boot();
 
   // start servo
-  servoMotor.init();
+  sensors.push_back(servoMotor);
+
+  for (Sensor& sensor : sensors) {
+    sensor.init();
+  }
 
   // start relay
   startRelay();
@@ -59,8 +66,8 @@ void loop() {
     lastMessage = now;
 
     // create json object
-    DynamicJsonDocument json(512);
-    JsonObject data = json.createNestedObject(MODULE_ID);
+    DynamicJsonDocument data(1024);
+    data["MODULE_ID"] = MODULE_ID;
 
     // measure TEMPERATURE
     data["TEMP"] = getTemperature(0);
@@ -82,7 +89,14 @@ void loop() {
     // measure SERVO_POSITION
     data["SERVO_POS"] = servoMotor.get();
 
+    JsonArray values = data.createNestedArray("values");
+
+    for (Sensor& sensor : sensors) {
+      JsonObject vals = values.createNestedObject().createNestedObject(sensor.getName());
+      sensor.getJsonValues(vals);
+    }
+
     // send json using WS
-    webSocketSendJson(json);
+    webSocketSendJson(data);
   }
 }

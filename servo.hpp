@@ -5,17 +5,17 @@
 
 class ServoMotor : public Sensor {
  private:
-  Servo servo;
+  String name;
 
+  Servo servo;
   int servoPin;
 
  public:
-  float get();
-
-  void write(int angle);
-
-  
   void init();
+  float get();
+  String getName();
+  void getJsonValues(JsonObject &obj);
 
-  ServoMotor(int pin);
+  ServoMotor(int pin, String sensorName);
+  void write(int angle);
 };
