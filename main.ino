@@ -3,12 +3,14 @@
 
 #include "config/config.hpp"
 #include "relay.hpp"
+#include "servo.hpp"
 #include "tempLogic.hpp"
 #include "tempSensor.hpp"
 #include "webSocket.hpp"
 #include "wifi.hpp"
 
 TempRegulator tempRegulator(0);
+ServoMotor servoMotor(27);
 
 void boot() {
   Serial.begin(115200);
@@ -27,6 +29,9 @@ void boot() {
 
 void setup() {
   boot();
+
+  // start servo
+  servoMotor.init();
 
   // start relay
   startRelay();
@@ -64,6 +69,8 @@ void loop() {
     if (!tempRegulator.isEnabled() && getTemperature(0) > 25) {
       tempRegulator.enable(true);
       tempRegulator.setTemperature(30);
+
+      servoMotor.write(30);
     }
 
     data["TEMP_REGULATOR_ENABLED"] = tempRegulator.isEnabled();
@@ -71,6 +78,9 @@ void loop() {
 
     // get RELAY status
     data["RELAY"] = RELAY_OPEN;
+
+    // measure SERVO_POSITION
+    data["SERVO_POS"] = servoMotor.get();
 
     // send json using WS
     webSocketSendJson(json);
