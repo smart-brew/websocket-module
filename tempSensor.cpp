@@ -1,16 +1,28 @@
 #include "tempSensor.hpp"
 
-OneWire oneWire(SENSOR_TEMP_PIN);
-
-// Pass our oneWire reference to Dallas Temperature sensor
-DallasTemperature sensors1(&oneWire);
-
-void startTempSensors() {
-  // start temperature sensors
-  sensors1.begin();
+TempSensor::TempSensor(int pin, String sensorName) {
+  sensorPin = pin;
+  name = sensorName;
 }
 
-float getTemperature(int sensorId) {
-  sensors1.requestTemperatures();
-  return sensors1.getTempCByIndex(sensorId);
+void TempSensor::init() {
+  oneWire.begin(sensorPin);
+  dallasTempSensors.setOneWire(&oneWire);
+  dallasTempSensors.begin();
+
+  Serial.println("[temp sensor] ready");
+}
+
+String TempSensor::getName() {
+  return name;
+}
+
+float TempSensor::get() {
+  dallasTempSensors.requestTemperatures();
+  return dallasTempSensors.getTempCByIndex(0);
+}
+
+void TempSensor::getJsonValues(JsonObject& obj) {
+  dallasTempSensors.requestTemperatures();
+  obj["TEMP"] = dallasTempSensors.getTempCByIndex(0);
 }

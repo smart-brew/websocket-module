@@ -1,3 +1,4 @@
+/*
 #include "tempLogic.hpp"
 
 TempRegulator::TempRegulator(int sensorIdArg) {
@@ -44,3 +45,4 @@ void TempRegulator::getHotter() {
     relayOpen();
   }
 };
+*/

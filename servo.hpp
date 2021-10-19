@@ -1,3 +1,5 @@
+#pragma once
+
 #include <Arduino.h>
 #include <ESP32Servo.h>  // download from: https://github.com/madhephaestus/ESP32Servo
 

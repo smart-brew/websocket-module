@@ -5,13 +5,16 @@
 #include "relay.hpp"
 #include "sensor.hpp"
 #include "servo.hpp"
-#include "tempLogic.hpp"
+// #include "tempLogic.hpp"
 #include "tempSensor.hpp"
 #include "webSocket.hpp"
 #include "wifi.hpp"
 
-TempRegulator tempRegulator(0);
+// TempRegulator tempRegulator(0);
+
+// create device objects here
 ServoMotor servoMotor(27, "SERVO_1");
+TempSensor tempSensor(SENSOR_TEMP_PIN, "TEMP_1");
 
 static std::vector<std::reference_wrapper<Sensor>> sensors;
 
@@ -33,8 +36,10 @@ void boot() {
 void setup() {
   boot();
 
-  // start servo
+  // --- ADD ALL SENSORS TO ARRAY ---
   sensors.push_back(servoMotor);
+  sensors.push_back(tempSensor);
+  // --------------------------------
 
   for (Sensor& sensor : sensors) {
     sensor.init();
@@ -42,10 +47,6 @@ void setup() {
 
   // start relay
   startRelay();
-
-  // start temperature sensors
-  startTempSensors();
-  Serial.println("[sensors] OK");
 
   // wifi login
   startWifi();
@@ -67,30 +68,11 @@ void loop() {
 
     // create json object
     DynamicJsonDocument data(1024);
-    data["MODULE_ID"] = MODULE_ID;
+    data["moduleId"] = MODULE_ID;
+    data["status"] = MODULE_ID;
 
-    // measure TEMPERATURE
-    data["TEMP"] = getTemperature(0);
-
-    // TEST - start temp regulation when 25 degrees or more
-    if (!tempRegulator.isEnabled() && getTemperature(0) > 25) {
-      tempRegulator.enable(true);
-      tempRegulator.setTemperature(30);
-
-      servoMotor.write(30);
-    }
-
-    data["TEMP_REGULATOR_ENABLED"] = tempRegulator.isEnabled();
-    data["TEMP_REGULATOR_DONE"] = tempRegulator.loop();
-
-    // get RELAY status
-    data["RELAY"] = RELAY_OPEN;
-
-    // measure SERVO_POSITION
-    data["SERVO_POS"] = servoMotor.get();
-
+    // get all data from all sensors
     JsonArray values = data.createNestedArray("values");
-
     for (Sensor& sensor : sensors) {
       JsonObject vals = values.createNestedObject().createNestedObject(sensor.getName());
       sensor.getJsonValues(vals);

@@ -16,6 +16,8 @@ ServoMotor::ServoMotor(int pin, String sensorName) {
 void ServoMotor::init() {
   servo.attach(servoPin);
   servo.write(90);
+
+  Serial.println("[servo] ready");
 }
 
 String ServoMotor::getName() {
@@ -24,5 +26,4 @@ String ServoMotor::getName() {
 
 void ServoMotor::getJsonValues(JsonObject &obj) {
   obj["ANGLE"] = servo.read();
-  obj["TEST"] = "OK";
 }
