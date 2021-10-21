@@ -8,6 +8,7 @@
 #include "sensor.hpp"
 #include "servo.hpp"
 // #include "tempLogic.hpp"
+#include "H300.hpp"
 #include "tempSensor.hpp"
 #include "webSocket.hpp"
 #include "wifi.hpp"
@@ -17,6 +18,8 @@
 // create device objects here
 ServoMotor servoMotor(27, "SERVO_1");
 TempSensor tempSensor(SENSOR_TEMP_PIN, "TEMP_1");
+
+// H300 h300("device-id", "mac-address", 2000, H300_RX, H300_TX, "H300_1");
 
 static std::vector<std::reference_wrapper<Sensor>> sensors;
 

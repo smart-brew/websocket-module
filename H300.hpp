@@ -9,8 +9,13 @@
 
 #include <string>
 
-class H300 {
+#include "config/config.hpp"
+#include "sensor.hpp"
+
+class H300 : public Sensor {
  private:
+  String name;
+
   mutable ModbusMaster node;
 
   static constexpr unsigned long baud_rate = 19200;
@@ -39,8 +44,14 @@ class H300 {
   static constexpr uint16_t get_timer_register = 0x1015;
   static constexpr uint16_t set_timer_register = 0xF82C;  // writable
 
-  H300(const std::string device_id, const uint8_t unit_id, const uint32_t poll_rate);
+  H300(const std::string device_id, const uint8_t unit_id, const uint32_t poll_rate, uint8_t RX, uint8_t TX, String name);
   uint8_t write_value(const uint16_t register_addr, const uint16_t value) const;
   uint8_t read_value(const uint16_t register_addr, uint16_t* const response) const;
   bool decrease_counter();
+
+  // interface Sensor
+  void init();
+  float get();
+  void getJsonValues(JsonObject& obj);
+  String getName();
 };
