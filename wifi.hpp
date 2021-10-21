@@ -1,7 +1,13 @@
 #include <WiFi.h>
-#include <WiFiClientSecure.h>
-#include <WiFiMulti.h>
 
 #include "config/config.hpp"
 
-void startWifi();
+class WiFiCls {
+ private:
+  char pwd[50];
+  char ssid[50];
+
+ public:
+  void start();
+  WiFiCls(String ssid, String pwd);
+};

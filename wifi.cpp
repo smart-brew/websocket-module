@@ -1,17 +1,23 @@
 #include "wifi.hpp"
 
-// wifi
-WiFiMulti WiFiMulti;
+WiFiCls::WiFiCls(String _ssid, String _pwd) {
+  _ssid.toCharArray(ssid, 50);
+  _pwd.toCharArray(pwd, 50);
+}
 
-void startWifi() {
+void WiFiCls::start() {
+  Serial.println(ssid);
+  Serial.println(pwd);
   Serial.println("[WIFI] Connecting wifi...");
 
   // wifi login
-  WiFiMulti.addAP(WIFI_SSID, WIFI_PWD);
+  WiFi.begin(ssid, pwd);
 
   // wait to load wifi
-  while (WiFiMulti.run() != WL_CONNECTED) {
+  while (WiFi.status() != WL_CONNECTED) {
     Serial.println("[WIFI] Retry wifi...");
     delay(1000);
   }
+
+  Serial.println("[WIFI] WiFi connected");
 }

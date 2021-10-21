@@ -44,5 +44,8 @@
     "streambuf": "cpp",
     "cinttypes": "cpp",
     "typeinfo": "cpp"
+  },
+  "files.exclude": {
+    "build": true
   }
 }

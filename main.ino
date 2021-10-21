@@ -1,6 +1,8 @@
 #include <Arduino.h>
 #include <ArduinoJson.h>  // needs additional install
 
+#include <vector>
+
 #include "config/config.hpp"
 #include "relay.hpp"
 #include "sensor.hpp"
@@ -17,6 +19,8 @@ ServoMotor servoMotor(27, "SERVO_1");
 TempSensor tempSensor(SENSOR_TEMP_PIN, "TEMP_1");
 
 static std::vector<std::reference_wrapper<Sensor>> sensors;
+
+WiFiCls wifi(WIFI_SSID, WIFI_PWD);
 
 void boot() {
   Serial.begin(115200);
@@ -49,8 +53,7 @@ void setup() {
   startRelay();
 
   // wifi login
-  startWifi();
-  Serial.println("[WIFI] WiFi connected");
+  wifi.start();
 
   // start websocket client
   startWS();
