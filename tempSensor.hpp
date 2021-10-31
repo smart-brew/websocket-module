@@ -9,6 +9,7 @@
 class TempSensor : public Sensor {
  private:
   String name;
+  String category = "TEMPERATURE";
 
   int sensorPin;
 
@@ -19,6 +20,7 @@ class TempSensor : public Sensor {
   void init();
   float get();
   String getName();
+  String getCategory();
   void getJsonValues(JsonObject& obj);
 
   TempSensor(int pin, String sensorName);

@@ -17,6 +17,10 @@ String TempSensor::getName() {
   return name;
 }
 
+String TempSensor::getCategory() {
+  return category;
+}
+
 float TempSensor::get() {
   dallasTempSensors.requestTemperatures();
   return dallasTempSensors.getTempCByIndex(0);

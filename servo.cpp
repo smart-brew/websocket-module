@@ -24,6 +24,10 @@ String ServoMotor::getName() {
   return name;
 }
 
+String ServoMotor::getCategory() {
+  return category;
+}
+
 void ServoMotor::getJsonValues(JsonObject &obj) {
   obj["ANGLE"] = servo.read();
 }

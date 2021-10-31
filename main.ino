@@ -19,7 +19,7 @@
 ServoMotor servoMotor(27, "SERVO_1");
 TempSensor tempSensor(SENSOR_TEMP_PIN, "TEMP_1");
 
-// H300 h300("device-id", "mac-address", 2000, H300_RX, H300_TX, "H300_1");
+// H300 h300("device-id", "mac-address", 2000, H300_RX, H300_TX, "MOTOR_1");
 
 static std::vector<std::reference_wrapper<Sensor>> sensors;
 
@@ -48,8 +48,8 @@ void setup() {
   sensors.push_back(tempSensor);
   // --------------------------------
 
-  for (Sensor& sensor : sensors) {
-    sensor.init();
+  for (Sensor& device : sensors) {
+    device.init();
   }
 
   // start relay
@@ -77,11 +77,17 @@ void loop() {
     data["moduleId"] = MODULE_ID;
     data["status"] = MODULE_ID;
 
-    // get all data from all sensors
-    JsonArray values = data.createNestedArray("values");
-    for (Sensor& sensor : sensors) {
-      JsonObject vals = values.createNestedObject().createNestedObject(sensor.getName());
-      sensor.getJsonValues(vals);
+    // get all data from all devices
+    for (Sensor& device : sensors) {
+      if (!data.containsKey(device.getCategory())) {
+        // create array: eg. "TEMPERATURE: []"
+        data.createNestedArray(device.getCategory());
+      }
+
+      // add data
+      JsonObject deviceData = data[device.getCategory()].createNestedObject();
+      deviceData["DEVICE"] = device.getName();
+      device.getJsonValues(deviceData);
     }
 
     // send json using WS

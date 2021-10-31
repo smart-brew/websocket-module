@@ -15,6 +15,7 @@
 class H300 : public Sensor {
  private:
   String name;
+  String category = "MOTOR";
 
   mutable ModbusMaster node;
 
@@ -54,4 +55,5 @@ class H300 : public Sensor {
   float get();
   void getJsonValues(JsonObject& obj);
   String getName();
+  String getCategory();
 };

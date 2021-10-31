@@ -161,3 +161,7 @@ void H300::getJsonValues(JsonObject& obj) {
 String H300::getName() {
   return name;
 };
+
+String H300::getCategory() {
+  return category;
+}

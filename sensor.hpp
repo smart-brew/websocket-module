@@ -2,11 +2,9 @@
 
 #include <ArduinoJson.h>
 
-class Sensor {
- private:
-  // device name
-  String name;
+#include "device.hpp"
 
+class Sensor : public Device {
  public:
   // initialize sensor
   virtual void init() = 0;
@@ -16,7 +14,4 @@ class Sensor {
 
   // add all values that will be sent to server to 'obj'
   virtual void getJsonValues(JsonObject &obj) = 0;
-
-  // name of device
-  virtual String getName() = 0;
 };

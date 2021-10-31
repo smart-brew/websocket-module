@@ -8,6 +8,7 @@
 class ServoMotor : public Sensor {
  private:
   String name;
+  String category = "SERVO";
 
   Servo servo;
   int servoPin;
@@ -16,6 +17,7 @@ class ServoMotor : public Sensor {
   void init();
   float get();
   String getName();
+  String getCategory();
   void getJsonValues(JsonObject &obj);
 
   ServoMotor(int pin, String sensorName);
