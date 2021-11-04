@@ -1,8 +1,7 @@
 #include "tempSensor.hpp"
 
-TempSensor::TempSensor(int pin, String sensorName) {
+TempSensor::TempSensor(int pin) {
   sensorPin = pin;
-  name = sensorName;
 }
 
 void TempSensor::init() {

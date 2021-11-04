@@ -8,7 +8,7 @@
 
 class TempSensor : public Device {
  private:
-  String name;
+  String name = "";
   String category = "TEMPERATURE";
 
   int sensorPin;
@@ -24,5 +24,5 @@ class TempSensor : public Device {
   void appendJsonValues(JsonObject& obj);
   void executeFunction(JsonObject& obj);
 
-  TempSensor(int pin, String sensorName);
+  TempSensor(int pin);
 };

@@ -13,12 +13,10 @@
 #include "webSocket.hpp"
 #include "wifi.hpp"
 
-// TempRegulator tempRegulator(0);
-
-// create device objects here
+// ---------- create device objects here ----------------------
 ServoMotor servoMotor(27, "SERVO_1");
-TempSensor tempSensor(SENSOR_TEMP_PIN, "TEMP_1");
-TempRegulator tempRegulator("TEMP_2");
+TempSensor tempSensor(SENSOR_TEMP_PIN);
+TempRegulator tempRegulator("TEMP_2", tempSensor);
 
 // H300 h300("device-id", "mac-address", 2000, H300_RX, H300_TX, "MOTOR_1");
 
@@ -26,27 +24,12 @@ static std::vector<std::reference_wrapper<Device>> devices;
 
 WiFiCls wifi(WIFI_SSID, WIFI_PWD);
 
-void boot() {
-  Serial.begin(115200);
-  Serial.setDebugOutput(true);
-
-  Serial.println();
-  Serial.println();
-  Serial.println();
-
-  for (uint8_t t = 4; t > 0; t--) {
-    Serial.printf("[SETUP] BOOT WAIT %d...\n", t);
-    Serial.flush();
-    delay(1000);
-  }
-}
-
+void boot();
 void setup() {
   boot();
 
   // --- ADD ALL SENSORS TO ARRAY ---
   devices.push_back(servoMotor);
-  devices.push_back(tempSensor);
   devices.push_back(tempRegulator);
   // --------------------------------
 
@@ -94,5 +77,20 @@ void loop() {
 
     // send json using WS
     webSocketSendJson(data);
+  }
+}
+
+void boot() {
+  Serial.begin(115200);
+  Serial.setDebugOutput(true);
+
+  Serial.println();
+  Serial.println();
+  Serial.println();
+
+  for (uint8_t t = 4; t > 0; t--) {
+    Serial.printf("[SETUP] BOOT WAIT %d...\n", t);
+    Serial.flush();
+    delay(1000);
   }
 }

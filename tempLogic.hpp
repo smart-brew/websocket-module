@@ -12,6 +12,7 @@ class TempRegulator : public Device {
   String category = "TEMPERATURE";
 
   boolean enabled = false;
+  TempSensor* tempSensor;
 
  public:
   void init();
@@ -21,5 +22,5 @@ class TempRegulator : public Device {
   void appendJsonValues(JsonObject& obj);
   void executeFunction(JsonObject& obj);
 
-  TempRegulator(String deviceName);
+  TempRegulator(String deviceName, TempSensor& _tempSensor);
 };
