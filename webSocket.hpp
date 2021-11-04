@@ -4,6 +4,8 @@
 
 #include "config/config.hpp"
 
+extern WebSocketsClient webSocket;
+
 extern bool WS_CONNECTED;
 
 void webSocketEvent(WStype_t type, uint8_t *payload, size_t length);

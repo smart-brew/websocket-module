@@ -23,5 +23,5 @@ class Device {
   virtual void appendJsonValues(JsonObject &obj) = 0;
 
   // instruction execution
-  virtual void executeFunction(JsonObject &obj) = 0;
+  virtual void executeFunction(JsonDocument &obj) = 0;
 };

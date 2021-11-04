@@ -27,4 +27,11 @@ void TempRegulator::appendJsonValues(JsonObject& obj) {
   obj["REGULATION_ENABLED"] = enabled;
 }
 
-void TempRegulator::executeFunction(JsonObject& obj) {}
+void TempRegulator::executeFunction(JsonDocument& obj) {
+  // const char* dev = getName().c_str();
+  // Serial.println(dev);
+  // if (strcmp(obj["DEVICE"], getName().c_str())) {
+  //   Serial.printf("Match ");
+  Serial.println(getName());
+  // }
+}

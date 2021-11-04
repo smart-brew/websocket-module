@@ -19,7 +19,7 @@ class ServoMotor : public Device {
   String getName();
   String getCategory();
   void appendJsonValues(JsonObject& obj);
-  void executeFunction(JsonObject& obj);
+  void executeFunction(JsonDocument& obj);
 
   ServoMotor(int pin, String sensorName);
   void write(int angle);

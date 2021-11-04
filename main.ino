@@ -25,6 +25,8 @@ static std::vector<std::reference_wrapper<Device>> devices;
 WiFiCls wifi(WIFI_SSID, WIFI_PWD);
 
 void boot();
+void webSocketEvent(WStype_t type, uint8_t* payload, size_t length);
+
 void setup() {
   boot();
 
@@ -45,6 +47,9 @@ void setup() {
 
   // start websocket client
   startWS();
+
+  // websocket event handler
+  webSocket.onEvent(webSocketEvent);
 }
 
 unsigned long lastMessage = 0;
@@ -92,5 +97,36 @@ void boot() {
     Serial.printf("[SETUP] BOOT WAIT %d...\n", t);
     Serial.flush();
     delay(1000);
+  }
+}
+
+void webSocketEvent(WStype_t type, uint8_t* payload, size_t length) {
+  DynamicJsonDocument data(256);
+
+  switch (type) {
+    case WStype_DISCONNECTED:
+      Serial.printf("[WSc] Disconnected!\n");
+      WS_CONNECTED = false;
+      break;
+
+    case WStype_CONNECTED:
+      Serial.printf("[WSc] Connected to url: %s\n", payload);
+      WS_CONNECTED = true;
+
+      data["moduleId"] = MODULE_ID;
+      // send message to server when Connected
+      webSocketSendJson(data);
+      break;
+
+    case WStype_TEXT:
+      Serial.printf("[WSc] get text: %s\n", payload);
+
+      deserializeJson(data, payload);
+
+      for (Device& device : devices) {
+        device.executeFunction(data);
+      }
+
+      break;
   }
 }

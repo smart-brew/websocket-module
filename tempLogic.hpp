@@ -20,7 +20,7 @@ class TempRegulator : public Device {
   String getName();
   String getCategory();
   void appendJsonValues(JsonObject& obj);
-  void executeFunction(JsonObject& obj);
+  void executeFunction(JsonDocument& obj);
 
   TempRegulator(String deviceName, TempSensor& _tempSensor);
 };

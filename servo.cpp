@@ -32,4 +32,4 @@ void ServoMotor::appendJsonValues(JsonObject& obj) {
   obj["ANGLE"] = servo.read();
 }
 
-void ServoMotor::executeFunction(JsonObject& obj) {}
+void ServoMotor::executeFunction(JsonDocument& obj) {}

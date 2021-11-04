@@ -30,4 +30,4 @@ void TempSensor::appendJsonValues(JsonObject& obj) {
   obj["TEMP"] = dallasTempSensors.getTempCByIndex(0);
 }
 
-void TempSensor::executeFunction(JsonObject& obj) {}
+void TempSensor::executeFunction(JsonDocument& obj) {}

@@ -166,4 +166,4 @@ String H300::getCategory() {
   return category;
 }
 
-void H300::executeFunction(JsonObject& obj) {}
+void H300::executeFunction(JsonDocument& obj) {}

@@ -22,7 +22,7 @@ class TempSensor : public Device {
   String getName();
   String getCategory();
   void appendJsonValues(JsonObject& obj);
-  void executeFunction(JsonObject& obj);
+  void executeFunction(JsonDocument& obj);
 
   TempSensor(int pin);
 };
