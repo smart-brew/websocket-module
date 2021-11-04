@@ -4,9 +4,9 @@
 #include <DallasTemperature.h>
 #include <OneWire.h>  // to fix 'rtc_gpio_desc' error visit: https://githubmemory.com/repo/PaulStoffregen/OneWire/issues/100
 
-#include "sensor.hpp"
+#include "device.hpp"
 
-class TempSensor : public Sensor {
+class TempSensor : public Device {
  private:
   String name;
   String category = "TEMPERATURE";
@@ -21,7 +21,8 @@ class TempSensor : public Sensor {
   float get();
   String getName();
   String getCategory();
-  void getJsonValues(JsonObject& obj);
+  void appendJsonValues(JsonObject& obj);
+  void executeFunction(JsonObject& obj);
 
   TempSensor(int pin, String sensorName);
 };

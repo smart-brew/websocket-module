@@ -6,23 +6,20 @@
 #include "relay.hpp"
 #include "tempSensor.hpp"
 
-class TempRegulator {
+class TempRegulator : public Device {
  private:
-  bool enabled = false;
-  float desiredTemperature;
+  String name;
+  String category = "TEMPERATURE";
 
-  // when TEMP is around desired valued within this range, it is considered valid
-  float VALID_MARGIN = 0.5;
-
-  // === logic ===
-  int sensorId = 0;
-  void getHotter();
-  void getCooler();
+  boolean enabled = false;
 
  public:
-  void enable(bool enable);
-  bool isEnabled();
-  void setTemperature(float temperature);
-  bool loop();
-  TempRegulator(int sensorIdArg);
+  void init();
+  float get();
+  String getName();
+  String getCategory();
+  void appendJsonValues(JsonObject& obj);
+  void executeFunction(JsonObject& obj);
+
+  TempRegulator(String deviceName);
 };

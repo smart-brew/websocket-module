@@ -3,9 +3,9 @@
 #include <Arduino.h>
 #include <ESP32Servo.h>  // download from: https://github.com/madhephaestus/ESP32Servo
 
-#include "sensor.hpp"
+#include "device.hpp"
 
-class ServoMotor : public Sensor {
+class ServoMotor : public Device {
  private:
   String name;
   String category = "SERVO";
@@ -18,7 +18,8 @@ class ServoMotor : public Sensor {
   float get();
   String getName();
   String getCategory();
-  void getJsonValues(JsonObject &obj);
+  void appendJsonValues(JsonObject& obj);
+  void executeFunction(JsonObject& obj);
 
   ServoMotor(int pin, String sensorName);
   void write(int angle);

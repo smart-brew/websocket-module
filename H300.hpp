@@ -10,9 +10,9 @@
 #include <string>
 
 #include "config/config.hpp"
-#include "sensor.hpp"
+#include "device.hpp"
 
-class H300 : public Sensor {
+class H300 : public Device {
  private:
   String name;
   String category = "MOTOR";
@@ -50,10 +50,11 @@ class H300 : public Sensor {
   uint8_t read_value(const uint16_t register_addr, uint16_t* const response) const;
   bool decrease_counter();
 
-  // interface Sensor
+  // interface Device
   void init();
   float get();
-  void getJsonValues(JsonObject& obj);
   String getName();
   String getCategory();
+  void appendJsonValues(JsonObject& obj);
+  void executeFunction(JsonObject& obj);
 };

@@ -26,7 +26,9 @@ float TempSensor::get() {
   return dallasTempSensors.getTempCByIndex(0);
 }
 
-void TempSensor::getJsonValues(JsonObject& obj) {
+void TempSensor::appendJsonValues(JsonObject& obj) {
   dallasTempSensors.requestTemperatures();
   obj["TEMP"] = dallasTempSensors.getTempCByIndex(0);
 }
+
+void TempSensor::executeFunction(JsonObject& obj) {}

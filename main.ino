@@ -3,12 +3,12 @@
 
 #include <vector>
 
-#include "config/config.hpp"
-#include "relay.hpp"
-#include "sensor.hpp"
-#include "servo.hpp"
-// #include "tempLogic.hpp"
 #include "H300.hpp"
+#include "config/config.hpp"
+#include "device.hpp"
+#include "relay.hpp"
+#include "servo.hpp"
+#include "tempLogic.hpp"
 #include "tempSensor.hpp"
 #include "webSocket.hpp"
 #include "wifi.hpp"
@@ -18,10 +18,11 @@
 // create device objects here
 ServoMotor servoMotor(27, "SERVO_1");
 TempSensor tempSensor(SENSOR_TEMP_PIN, "TEMP_1");
+TempRegulator tempRegulator("TEMP_2");
 
 // H300 h300("device-id", "mac-address", 2000, H300_RX, H300_TX, "MOTOR_1");
 
-static std::vector<std::reference_wrapper<Sensor>> sensors;
+static std::vector<std::reference_wrapper<Device>> devices;
 
 WiFiCls wifi(WIFI_SSID, WIFI_PWD);
 
@@ -44,11 +45,12 @@ void setup() {
   boot();
 
   // --- ADD ALL SENSORS TO ARRAY ---
-  sensors.push_back(servoMotor);
-  sensors.push_back(tempSensor);
+  devices.push_back(servoMotor);
+  devices.push_back(tempSensor);
+  devices.push_back(tempRegulator);
   // --------------------------------
 
-  for (Sensor& device : sensors) {
+  for (Device& device : devices) {
     device.init();
   }
 
@@ -78,7 +80,7 @@ void loop() {
     data["status"] = MODULE_ID;
 
     // get all data from all devices
-    for (Sensor& device : sensors) {
+    for (Device& device : devices) {
       if (!data.containsKey(device.getCategory())) {
         // create array: eg. "TEMPERATURE: []"
         data.createNestedArray(device.getCategory());
@@ -87,7 +89,7 @@ void loop() {
       // add data
       JsonObject deviceData = data[device.getCategory()].createNestedObject();
       deviceData["DEVICE"] = device.getName();
-      device.getJsonValues(deviceData);
+      device.appendJsonValues(deviceData);
     }
 
     // send json using WS

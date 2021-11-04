@@ -28,6 +28,8 @@ String ServoMotor::getCategory() {
   return category;
 }
 
-void ServoMotor::getJsonValues(JsonObject &obj) {
+void ServoMotor::appendJsonValues(JsonObject& obj) {
   obj["ANGLE"] = servo.read();
 }
+
+void ServoMotor::executeFunction(JsonObject& obj) {}

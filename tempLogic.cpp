@@ -1,48 +1,26 @@
-/*
 #include "tempLogic.hpp"
 
-TempRegulator::TempRegulator(int sensorIdArg) {
-  sensorId = sensorIdArg;
+TempRegulator::TempRegulator(String deviceName) {
+  name = deviceName;
 }
 
-void TempRegulator::enable(bool enable) {
-  enabled = enable;
+void TempRegulator::init() {
+  Serial.println("[temp logic] ready");
 }
 
-bool TempRegulator::isEnabled() {
-  return enabled;
+String TempRegulator::getName() {
+  return name;
 }
 
-void TempRegulator::setTemperature(float temperature) {
-  desiredTemperature = temperature;
-};
-
-bool TempRegulator::loop() {
-  if (!enabled) return false;
-
-  float measuredTemp = getTemperature(sensorId);
-
-  if (desiredTemperature > measuredTemp) {
-    // needs to get hotter
-    getHotter();
-  } else if (desiredTemperature < measuredTemp) {
-    // need to get cooler
-    getCooler();
-  }
-
-  return abs(desiredTemperature - measuredTemp) < VALID_MARGIN;
+String TempRegulator::getCategory() {
+  return category;
 }
 
-// === logic ===
-void TempRegulator::getCooler() {
-  if (RELAY_OPEN) {
-    relayClose();
-  }
-};
+float TempRegulator::get() {
+  return 0;
+}
 
-void TempRegulator::getHotter() {
-  if (!RELAY_OPEN) {
-    relayOpen();
-  }
-};
-*/
+void TempRegulator::appendJsonValues(JsonObject& obj) {
+}
+
+void TempRegulator::executeFunction(JsonObject& obj) {}

@@ -72,7 +72,7 @@ float H300::get() {
   return speed;
 };
 
-void H300::getJsonValues(JsonObject& obj) {
+void H300::appendJsonValues(JsonObject& obj) {
   uint16_t speed = 0;
   if (!read_value(speed_register, &speed)) {
     float speed_res = float(speed) / 10;
@@ -165,3 +165,5 @@ String H300::getName() {
 String H300::getCategory() {
   return category;
 }
+
+void H300::executeFunction(JsonObject& obj) {}
