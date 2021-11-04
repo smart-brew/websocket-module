@@ -11,8 +11,10 @@ class TempRegulator : public Device {
   String name;
   String category = "TEMPERATURE";
 
-  boolean enabled = false;
   TempSensor* tempSensor;
+
+  boolean enabled = false;
+  float tempTarget = 0;
 
  public:
   void init();

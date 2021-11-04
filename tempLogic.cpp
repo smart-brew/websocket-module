@@ -28,10 +28,13 @@ void TempRegulator::appendJsonValues(JsonObject& obj) {
 }
 
 void TempRegulator::executeFunction(JsonDocument& obj) {
-  // const char* dev = getName().c_str();
-  // Serial.println(dev);
-  // if (strcmp(obj["DEVICE"], getName().c_str())) {
-  //   Serial.printf("Match ");
-  Serial.println(getName());
-  // }
+  if (getCategory().equals(obj["CATEGORY"].as<const char*>()) &&
+      getName().equals(obj["DEVICE"].as<const char*>())) {
+    String instruction = obj["INSTRUCTION"];
+
+    // SET_TEMPERATURE
+    if (instruction.equals("SET_TEMPERATURE")) {
+      enabled = true;
+    }
+  }
 }
