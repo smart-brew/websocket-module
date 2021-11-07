@@ -13,8 +13,10 @@ class TempRegulator : public Device {
 
   TempSensor* tempSensor;
 
+  boolean tempRaise = true;
   boolean enabled = false;
   float tempTarget = 0;
+  int status = DEVICE_WAITING;
 
  public:
   void init();
@@ -25,4 +27,5 @@ class TempRegulator : public Device {
   void executeFunction(JsonDocument& obj);
 
   TempRegulator(String deviceName, TempSensor& _tempSensor);
+  void updateStatus();
 };

@@ -2,6 +2,13 @@
 
 #include <ArduinoJson.h>
 
+#define DEVICE_WAITING 0
+#define DEVICE_DONE 1
+#define DEVICE_FAIL 2
+#define DEVICE_IN_PROGRESS 3
+
+static const char *DEVICE_STATUS[] = {"WAITING", "DONE", "FAIL", "IN_PROGRESS"};
+
 class Device {
  private:
   // device name
