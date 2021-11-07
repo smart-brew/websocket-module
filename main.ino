@@ -124,9 +124,9 @@ void webSocketEvent(WStype_t type, uint8_t* payload, size_t length) {
       deserializeJson(data, payload);
 
       // check all fields
-      if (!obj["DEVICE"].isNull() &&
-          !obj["CATEGORY"].isNull() &&
-          !obj["INSTRUCTION"].isNull()) {
+      if (!data["DEVICE"].isNull() &&
+          !data["CATEGORY"].isNull() &&
+          !data["INSTRUCTION"].isNull()) {
         for (Device& device : devices) {
           device.executeFunction(data);
         }
