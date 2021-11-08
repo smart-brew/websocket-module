@@ -23,6 +23,7 @@
 - WebSockets by Markus Sattler
 - ESP32Servo by John K.
 - OneWire by Jim Studt
-  - to fix 'rtc_gpio_desc' error visit: https://githubmemory.com/repo/PaulStoffregen/OneWire/issues/100
+  - IMPORTANT: to fix 'rtc_gpio_desc' error visit: https://githubmemory.com/repo/PaulStoffregen/OneWire/issues/100
+    **or** *Find rtc_gpio_desc replace with rtc_io_desc in the OneWire_direct_gpio.h file solved the issue*
 - ModbusMaster from https://www.arduino.cc/reference/en/libraries/modbusmaster/
 - Arduino-Temperature-Control-Library from https://github.com/milesburton/Arduino-Temperature-Control-Library
