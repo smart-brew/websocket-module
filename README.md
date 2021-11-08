@@ -16,3 +16,13 @@
         "pathToLib": "your\\path\\to\\lib"
     },
 ```
+
+4. Install libraries
+
+- ArduinoJson by Benoit Blanchon
+- WebSockets by Markus Sattler
+- ESP32Servo by John K.
+- OneWire by Jim Studt
+  - to fix 'rtc_gpio_desc' error visit: https://githubmemory.com/repo/PaulStoffregen/OneWire/issues/100
+- ModbusMaster from https://www.arduino.cc/reference/en/libraries/modbusmaster/
+- Arduino-Temperature-Control-Library from https://github.com/milesburton/Arduino-Temperature-Control-Library
