@@ -31,22 +31,19 @@ void TempRegulator::appendJsonValues(JsonObject& obj) {
 }
 
 void TempRegulator::executeFunction(JsonDocument& obj) {
-  if (getCategory().equals(obj["CATEGORY"].as<const char*>()) &&
-      getName().equals(obj["DEVICE"].as<const char*>())) {
-    String instruction = obj["INSTRUCTION"];
+  String instruction = obj["INSTRUCTION"];
 
-    // SET_TEMPERATURE
-    if (instruction.equals("SET_TEMPERATURE")) {
-      enabled = true;
-      status = DEVICE_IN_PROGRESS;
+  // SET_TEMPERATURE
+  if (instruction.equals("SET_TEMPERATURE") && !obj["PARAMS"].isNull()) {
+    enabled = true;
+    status = DEVICE_IN_PROGRESS;
 
-      tempTarget = obj["PARAMS"].as<float>();
+    tempTarget = obj["PARAMS"].as<float>();
 
-      if (get() < tempTarget) {
-        tempRaise = true;
-      } else {
-        tempRaise = false;
-      }
+    if (get() < tempTarget) {
+      tempRaise = true;
+    } else {
+      tempRaise = false;
     }
   }
 }

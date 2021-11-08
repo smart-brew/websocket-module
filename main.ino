@@ -18,7 +18,8 @@ ServoMotor servoMotor(27, "SERVO_1");
 TempSensor tempSensor(SENSOR_TEMP_PIN);
 TempRegulator tempRegulator("TEMP_2", tempSensor);
 
-// H300 h300("device-id", "mac-address", 2000, H300_RX, H300_TX, "MOTOR_1");
+const std::string id = "device-id";
+H300 motor(id, 1, 2000, H300_RX, H300_TX, "MOTOR_1");
 
 static std::vector<std::reference_wrapper<Device>> devices;
 
@@ -128,7 +129,11 @@ void webSocketEvent(WStype_t type, uint8_t* payload, size_t length) {
           !data["CATEGORY"].isNull() &&
           !data["INSTRUCTION"].isNull()) {
         for (Device& device : devices) {
-          device.executeFunction(data);
+          // check if matches device
+          if (device.getCategory().equals(data["CATEGORY"].as<const char*>()) &&
+              device.getName().equals(data["DEVICE"].as<const char*>())) {
+            device.executeFunction(data);
+          }
         }
       }
 

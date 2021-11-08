@@ -166,4 +166,31 @@ String H300::getCategory() {
   return category;
 }
 
-void H300::executeFunction(JsonDocument& obj) {}
+void H300::set_motion(String type) {
+  if (type == "FWD") write_value(H300::set_motion_register, 1);
+  if (type == "REV") write_value(H300::set_motion_register, 2);
+  if (type == "FWD_JOG") write_value(H300::set_motion_register, 3);
+  if (type == "REV_JOG") write_value(H300::set_motion_register, 4);
+  if (type == "STOP") write_value(H300::set_motion_register, 5);
+  if (type == "BREAK") write_value(H300::set_motion_register, 6);
+}
+
+void H300::executeFunction(JsonDocument& obj) {
+  String instruction = obj["INSTRUCTION"];
+  const char* value = obj["PARAMS"];
+
+  if (!obj["PARAMS"].isNull() && !obj["INSTRUCTION"].isNull()) return;
+
+  if (instruction.equals("SET_MOTOR_SPEED")) {
+    set_motion("FWD");
+    write_value(H300::speed_register, (uint16_t)(atof(value) * 10));
+  } else if (instruction.equals("SET_FREQ")) {
+    write_value(H300::set_freq_register, (uint16_t)(atof(value) * 100));
+  } else if (instruction.equals("ACCEL_TIME")) {
+    write_value(H300::accel_time_register, (uint16_t)atoi(value));
+  } else if (instruction.equals("DECEL_TIME")) {
+    write_value(H300::decel_time_register, (uint16_t)atoi(value));
+  } else if (instruction.equals("SET_TIMER")) {
+    write_value(H300::set_timer_register, (uint16_t)(atof(value) * 10));
+  }
+}

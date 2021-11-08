@@ -49,6 +49,7 @@ class H300 : public Device {
   uint8_t write_value(const uint16_t register_addr, const uint16_t value) const;
   uint8_t read_value(const uint16_t register_addr, uint16_t* const response) const;
   bool decrease_counter();
+  void set_motion(String type);
 
   // interface Device
   void init();
