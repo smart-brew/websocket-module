@@ -7,14 +7,16 @@
 2. To use ESP32 with arduino IDE follow this manual:
    https://docs.espressif.com/projects/arduino-esp32/en/latest/installing.html
    arduino.additionalUrls
+   
+   **Or** use VSCode (recommended for better IntelliSense) with Arduino extension (needs similar config as Arduino IDE)
 
 3. Update `c_cpp_properties.json` with your path
 
 ```json
 "env": {
-        "pathToArduino": "your\\path\\to\\arduino",
-        "pathToLib": "your\\path\\to\\lib"
-    },
+   "pathToArduino": "your\\path\\to\\arduino",
+   "pathToLib": "your\\path\\to\\lib"
+},
 ```
 
 4. Install libraries
