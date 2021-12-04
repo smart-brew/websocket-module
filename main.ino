@@ -10,16 +10,19 @@
 #include "servo.hpp"
 #include "tempLogic.hpp"
 #include "tempSensor.hpp"
+#include "timer.hpp"
 #include "webSocket.hpp"
 #include "wifi.hpp"
 
-// ---------- create device objects here ----------------------
+// ---------- CREATE DEVICE OBJECTS HERE ----------------------
 ServoMotor servoMotor(27, "SERVO_1");
 TempSensor tempSensor(SENSOR_TEMP_PIN);
 TempRegulator tempRegulator("TEMP_2", tempSensor);
+Timer timer("TIMER");
 
 const std::string id = "device-id";
 H300 motor(id, 1, 2000, H300_RX, H300_TX, "MOTOR_1");
+// ------------------------------------------------------------
 
 static std::vector<std::reference_wrapper<Device>> devices;
 
@@ -34,6 +37,7 @@ void setup() {
   // --- ADD ALL SENSORS TO ARRAY ---
   devices.push_back(servoMotor);
   devices.push_back(tempRegulator);
+  devices.push_back(timer);
   // --------------------------------
 
   for (Device& device : devices) {
