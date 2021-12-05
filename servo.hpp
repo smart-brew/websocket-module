@@ -9,6 +9,7 @@ class ServoMotor : public Device {
  private:
   String name;
   String category = "SERVO";
+  int status = DEVICE_WAITING;
 
   Servo servo;
   int servoPin;
@@ -18,6 +19,7 @@ class ServoMotor : public Device {
   float get();
   String getName();
   String getCategory();
+  String getStatus();
   void appendJsonValues(JsonObject& obj);
   void executeFunction(JsonDocument& obj);
 

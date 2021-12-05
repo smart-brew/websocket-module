@@ -22,23 +22,26 @@ float TempRegulator::get() {
   return tempSensor->get();
 }
 
+String TempRegulator::getStatus() {
+  return DEVICE_STATUS[status];
+}
+
 void TempRegulator::appendJsonValues(JsonObject& obj) {
   updateStatus();
 
   tempSensor->appendJsonValues(obj);
-  obj["REGULATION_ENABLED"] = enabled;
-  obj["STATUS"] = DEVICE_STATUS[status];
+  obj["regulation_enabled"] = enabled;
 }
 
 void TempRegulator::executeFunction(JsonDocument& obj) {
-  String instruction = obj["INSTRUCTION"];
+  String instruction = obj["instruction"];
 
   // SET_TEMPERATURE
-  if (instruction.equals("SET_TEMPERATURE") && !obj["PARAMS"].isNull()) {
+  if (instruction.equals("SET_TEMPERATURE") && !obj["params"].isNull()) {
     enabled = true;
     status = DEVICE_IN_PROGRESS;
 
-    tempTarget = obj["PARAMS"].as<float>();
+    tempTarget = obj["params"].as<float>();
 
     if (get() < tempTarget) {
       tempRaise = true;

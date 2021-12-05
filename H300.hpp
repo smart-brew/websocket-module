@@ -16,6 +16,7 @@ class H300 : public Device {
  private:
   String name;
   String category = "MOTOR";
+  int status = DEVICE_WAITING;
 
   mutable ModbusMaster node;
 
@@ -56,6 +57,7 @@ class H300 : public Device {
   float get();
   String getName();
   String getCategory();
+  String getStatus();
   void appendJsonValues(JsonObject& obj);
   void executeFunction(JsonDocument& obj);
 };

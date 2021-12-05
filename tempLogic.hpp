@@ -10,19 +10,20 @@ class TempRegulator : public Device {
  private:
   String name;
   String category = "TEMPERATURE";
+  int status = DEVICE_WAITING;
 
   TempSensor* tempSensor;
 
   boolean tempRaise = true;
   boolean enabled = false;
   float tempTarget = 0;
-  int status = DEVICE_WAITING;
 
  public:
   void init();
   float get();
   String getName();
   String getCategory();
+  String getStatus();
   void appendJsonValues(JsonObject& obj);
   void executeFunction(JsonDocument& obj);
 

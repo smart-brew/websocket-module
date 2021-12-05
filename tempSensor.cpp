@@ -20,6 +20,10 @@ String TempSensor::getCategory() {
   return category;
 }
 
+String TempSensor::getStatus() {
+  return DEVICE_STATUS[status];
+}
+
 float TempSensor::get() {
   dallasTempSensors.requestTemperatures();
   return dallasTempSensors.getTempCByIndex(0);
@@ -27,7 +31,7 @@ float TempSensor::get() {
 
 void TempSensor::appendJsonValues(JsonObject& obj) {
   dallasTempSensors.requestTemperatures();
-  obj["TEMP"] = dallasTempSensors.getTempCByIndex(0);
+  obj["temp"] = dallasTempSensors.getTempCByIndex(0);
 }
 
 void TempSensor::executeFunction(JsonDocument& obj) {}

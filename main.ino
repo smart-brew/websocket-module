@@ -81,8 +81,9 @@ void loop() {
 
       // add data
       JsonObject deviceData = data[device.getCategory()].createNestedObject();
-      deviceData["DEVICE"] = device.getName();
       device.appendJsonValues(deviceData);
+      deviceData["device"] = device.getName();
+      deviceData["status"] = device.getStatus();
     }
 
     // send json using WS
@@ -129,13 +130,13 @@ void webSocketEvent(WStype_t type, uint8_t* payload, size_t length) {
       deserializeJson(data, payload);
 
       // check all fields
-      if (!data["DEVICE"].isNull() &&
-          !data["CATEGORY"].isNull() &&
-          !data["INSTRUCTION"].isNull()) {
+      if (!data["device"].isNull() &&
+          !data["category"].isNull() &&
+          !data["instruction"].isNull()) {
         for (Device& device : devices) {
           // check if matches device
-          if (device.getCategory().equals(data["CATEGORY"].as<const char*>()) &&
-              device.getName().equals(data["DEVICE"].as<const char*>())) {
+          if (device.getCategory().equals(data["category"].as<const char*>()) &&
+              device.getName().equals(data["device"].as<const char*>())) {
             device.executeFunction(data);
           }
         }

@@ -41,19 +41,22 @@ void Timer::updateStatus() {
   }
 }
 
+String Timer::getStatus() {
+  return DEVICE_STATUS[status];
+}
+
 void Timer::appendJsonValues(JsonObject& obj) {
   updateStatus();
 
-  obj["REMAINING"] = getRemaining();
-  obj["STATUS"] = DEVICE_STATUS[status];
+  obj["remaining"] = getRemaining();
 }
 
 void Timer::executeFunction(JsonDocument& obj) {
-  String instruction = obj["INSTRUCTION"];
+  String instruction = obj["instruction"];
 
   // WAIT
-  if (instruction.equals("WAIT") && !obj["PARAMS"].isNull()) {
-    length = obj["PARAMS"].as<int32_t>();
+  if (instruction.equals("WAIT") && !obj["params"].isNull()) {
+    length = obj["params"].as<int32_t>();
     gettimeofday(&start, NULL);  // get current time
   }
 }

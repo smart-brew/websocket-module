@@ -24,12 +24,16 @@ String ServoMotor::getName() {
   return name;
 }
 
+String ServoMotor::getStatus() {
+  return DEVICE_STATUS[status];
+}
+
 String ServoMotor::getCategory() {
   return category;
 }
 
 void ServoMotor::appendJsonValues(JsonObject& obj) {
-  obj["ANGLE"] = servo.read();
+  obj["angle"] = servo.read();
 }
 
 void ServoMotor::executeFunction(JsonDocument& obj) {}

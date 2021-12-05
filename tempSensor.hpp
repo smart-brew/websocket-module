@@ -10,6 +10,7 @@ class TempSensor : public Device {
  private:
   String name = "";
   String category = "TEMPERATURE";
+  int status = DEVICE_WAITING;
 
   int sensorPin;
 
@@ -21,6 +22,7 @@ class TempSensor : public Device {
   float get();
   String getName();
   String getCategory();
+  String getStatus();
   void appendJsonValues(JsonObject& obj);
   void executeFunction(JsonDocument& obj);
 

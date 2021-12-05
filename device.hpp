@@ -17,11 +17,16 @@ class Device {
   // device category
   String category;
 
+  // device status
+  int status;
+
  public:
   // name of device
   virtual String getName() = 0;
   // category of device
   virtual String getCategory() = 0;
+  // status of device
+  virtual String getStatus() = 0;
 
   // initialize device
   virtual void init() = 0;

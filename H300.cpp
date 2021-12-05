@@ -77,7 +77,7 @@ void H300::appendJsonValues(JsonObject& obj) {
   if (!read_value(speed_register, &speed)) {
     float speed_res = float(speed) / 10;
 
-    obj["SPEED"] = speed_res;
+    obj["speed"] = speed_res;
     Serial.println(String("\tSPEED:\t") + speed_res);
   }
 
@@ -90,7 +90,7 @@ void H300::appendJsonValues(JsonObject& obj) {
     else
       state_res = "ERROR " + state;
 
-    obj["STATE"] = state_res;
+    obj["state"] = state_res;
     Serial.println(String("\tSTATE:\t") + state_res);
   }
 
@@ -98,11 +98,11 @@ void H300::appendJsonValues(JsonObject& obj) {
   if (!read_value(get_freq_register, &get_freq)) {
     float get_freq_res = float(get_freq) / 100;
 
-    obj["GET_FREQ"] = get_freq_res;
+    obj["get_freq"] = get_freq_res;
     Serial.println(String("\tGET_FREQ:\t") + get_freq_res);
 
     float rpm_res = (get_freq_res * 60 * 2) / 4;
-    obj["RPM"] = rpm_res;
+    obj["rpm"] = rpm_res;
     Serial.println(String("\tRPM:\t") + rpm_res);
   }
 
@@ -110,7 +110,7 @@ void H300::appendJsonValues(JsonObject& obj) {
   if (!read_value(set_freq_register, &set_freq)) {
     float set_freq_res = float(set_freq) / 100;
 
-    obj["SET_FREQ"] = set_freq_res;
+    obj["set_freq"] = set_freq_res;
     Serial.println(String("\tSET_FREQ:\t") + set_freq_res);
   }
 
@@ -125,19 +125,19 @@ void H300::appendJsonValues(JsonObject& obj) {
     else if (get_motion == 3)
       get_motion_res = "STOP";
 
-    obj["GET_MOTION"] = get_motion_res;
+    obj["get_motion"] = get_motion_res;
     Serial.println(String("\tGET_MOTION:\t") + get_motion_res);
   }
 
   uint16_t accel_time = 0;
   if (!read_value(accel_time_register, &accel_time)) {
-    obj["ACCEL_TIME"] = accel_time;
+    obj["accel_time"] = accel_time;
     Serial.println(String("\tACCEL_TIME:\t") + accel_time);
   }
 
   uint16_t decel_time = 0;
   if (!read_value(decel_time_register, &decel_time)) {
-    obj["DECEL_TIME"] = decel_time;
+    obj["decel_time"] = decel_time;
     Serial.println(String("\tDECEL_TIME:\t") + decel_time);
   }
 
@@ -145,7 +145,7 @@ void H300::appendJsonValues(JsonObject& obj) {
   if (!read_value(get_timer_register, &get_timer)) {
     float get_timer_res = float(get_timer) / 10;
 
-    obj["GET_TIMER"] = get_timer_res;
+    obj["get_timer"] = get_timer_res;
     Serial.println(String("\tGET_TIMER:\t") + get_timer_res);
   }
 
@@ -153,7 +153,7 @@ void H300::appendJsonValues(JsonObject& obj) {
   if (!read_value(set_timer_register, &set_timer)) {
     float set_timer_res = float(set_timer) / 10;
 
-    obj["SET_TIMER"] = set_timer_res;
+    obj["set_timer"] = set_timer_res;
     Serial.println(String("\tSET_TIMER:\t") + set_timer_res);
   }
 };
@@ -176,10 +176,10 @@ void H300::set_motion(String type) {
 }
 
 void H300::executeFunction(JsonDocument& obj) {
-  String instruction = obj["INSTRUCTION"];
-  const char* value = obj["PARAMS"];
+  if (obj["params"].isNull()) return;
 
-  if (!obj["PARAMS"].isNull() && !obj["INSTRUCTION"].isNull()) return;
+  String instruction = obj["instruction"];
+  const char* value = obj["params"];
 
   if (instruction.equals("SET_MOTOR_SPEED")) {
     set_motion("FWD");
@@ -193,4 +193,8 @@ void H300::executeFunction(JsonDocument& obj) {
   } else if (instruction.equals("SET_TIMER")) {
     write_value(H300::set_timer_register, (uint16_t)(atof(value) * 10));
   }
+}
+
+String H300::getStatus() {
+  return DEVICE_STATUS[status];
 }

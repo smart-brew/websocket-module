@@ -9,16 +9,17 @@ class Timer : public Device {
  private:
   String name;
   String category = "SYSTEM";
+  int status = DEVICE_WAITING;
 
   struct timeval start;
   struct timeval now;
   int32_t length;
-  int status = DEVICE_WAITING;
 
  public:
   void init();
   String getName();
   String getCategory();
+  String getStatus();
   void appendJsonValues(JsonObject& obj);
   void executeFunction(JsonDocument& obj);
 
