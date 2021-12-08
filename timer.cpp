@@ -60,3 +60,8 @@ void Timer::executeFunction(JsonDocument& obj) {
     gettimeofday(&start, NULL);  // get current time
   }
 }
+
+void Timer::abort() {
+  length = 0;
+  status = DEVICE_WAITING;
+}

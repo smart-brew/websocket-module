@@ -63,3 +63,7 @@ void TempRegulator::updateStatus() {
     status = DEVICE_DONE;
   }
 }
+
+void TempRegulator::abort() {
+  status = DEVICE_WAITING;
+}

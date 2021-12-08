@@ -70,7 +70,7 @@ void loop() {
     // create json object
     DynamicJsonDocument data(1024);
     data["moduleId"] = MODULE_ID;
-    data["status"] = MODULE_ID;
+    data["status"] = "OK";
 
     // get all data from all devices
     for (Device& device : devices) {
@@ -129,8 +129,19 @@ void webSocketEvent(WStype_t type, uint8_t* payload, size_t length) {
 
       deserializeJson(data, payload);
 
-      // check all fields
-      if (!data["device"].isNull() &&
+      if (data["type"].isNull()) break;
+      String type = data["type"];
+
+      // abort
+      if (type.equals("abort")) {
+        for (Device& device : devices) {
+          device.abort();
+        }
+      }
+
+      // instruction
+      if (type.equals("instruction") &&
+          !data["device"].isNull() &&
           !data["category"].isNull() &&
           !data["instruction"].isNull()) {
         for (Device& device : devices) {

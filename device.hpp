@@ -36,4 +36,7 @@ class Device {
 
   // instruction execution
   virtual void executeFunction(JsonDocument &obj) = 0;
+
+  // abort instruction
+  virtual void abort() = 0;
 };

@@ -19,6 +19,7 @@ class TempSensor : public Device {
 
  public:
   void init();
+  void abort();
   float get();
   String getName();
   String getCategory();

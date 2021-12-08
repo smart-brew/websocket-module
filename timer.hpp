@@ -17,6 +17,7 @@ class Timer : public Device {
 
  public:
   void init();
+  void abort();
   String getName();
   String getCategory();
   String getStatus();

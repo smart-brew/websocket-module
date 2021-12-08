@@ -54,6 +54,7 @@ class H300 : public Device {
 
   // interface Device
   void init();
+  void abort();
   float get();
   String getName();
   String getCategory();

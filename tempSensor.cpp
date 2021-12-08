@@ -35,3 +35,7 @@ void TempSensor::appendJsonValues(JsonObject& obj) {
 }
 
 void TempSensor::executeFunction(JsonDocument& obj) {}
+
+void TempSensor::abort() {
+  status = DEVICE_WAITING;
+}

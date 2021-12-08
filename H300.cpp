@@ -198,3 +198,8 @@ void H300::executeFunction(JsonDocument& obj) {
 String H300::getStatus() {
   return DEVICE_STATUS[status];
 }
+
+void H300::abort() {
+  set_motion("STOP");
+  status = DEVICE_WAITING;
+}

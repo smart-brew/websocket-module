@@ -37,3 +37,7 @@ void ServoMotor::appendJsonValues(JsonObject& obj) {
 }
 
 void ServoMotor::executeFunction(JsonDocument& obj) {}
+
+void ServoMotor::abort() {
+  status = DEVICE_WAITING;
+}
