@@ -19,5 +19,7 @@ void WiFiCls::start() {
     delay(1000);
   }
 
-  Serial.println("[WIFI] WiFi connected");
+  IPAddress ip = WiFi.localIP();
+
+  Serial.printf("[WIFI] WiFi connected (my ip: %s)\n", ip.toString().c_str());
 }

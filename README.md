@@ -32,5 +32,5 @@
 
 ## Debugging help
 
-Error during upload to **some** ESP boards - TIMED_OUT - press BOOT button on ESP during upload
+Error during upload to **some** ESP boards - TIMED_OUT - press (5 sec) BOOT button on ESP during upload
 https://randomnerdtutorials.com/solved-failed-to-connect-to-esp32-timed-out-waiting-for-packet-header/

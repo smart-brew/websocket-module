@@ -43,7 +43,9 @@
     "stdexcept": "cpp",
     "streambuf": "cpp",
     "cinttypes": "cpp",
-    "typeinfo": "cpp"
+    "typeinfo": "cpp",
+    "mutex": "cpp",
+    "thread": "cpp"
   },
   "files.exclude": {
     "build": true

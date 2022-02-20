@@ -64,7 +64,7 @@ void loop() {
 
   uint64_t now = millis();
 
-  if (now - lastMessage > 1000 && WS_CONNECTED) {
+  if (now - lastMessage > WS_SEND_INTERVAL && WS_CONNECTED) {
     lastMessage = now;
 
     // create json object
@@ -111,7 +111,7 @@ void webSocketEvent(WStype_t type, uint8_t* payload, size_t length) {
 
   switch (type) {
     case WStype_DISCONNECTED:
-      Serial.printf("[WSc] Disconnected!\n");
+      Serial.printf("[WSc] Disconnected! (%s:%d)\n", WS_HOST, WS_PORT);
       WS_CONNECTED = false;
       break;
 
