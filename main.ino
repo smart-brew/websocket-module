@@ -15,6 +15,7 @@
 #include "wifi.hpp"
 
 // ---------- CREATE DEVICE OBJECTS HERE ----------------------
+RelayModule relay("RELAY_1");
 ServoMotor servoMotor(27, "SERVO_1");
 TempSensor tempSensor(SENSOR_TEMP_PIN);
 TempRegulator tempRegulator("TEMP_2", tempSensor);
@@ -38,6 +39,7 @@ void setup() {
   devices.push_back(servoMotor);
   devices.push_back(tempRegulator);
   devices.push_back(timer);
+  devices.push_back(relay);
   // --------------------------------
 
   for (Device& device : devices) {

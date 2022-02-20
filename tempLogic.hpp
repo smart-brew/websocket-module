@@ -3,7 +3,6 @@
 #include <Arduino.h>
 
 // === logic ===
-#include "relay.hpp"
 #include "tempSensor.hpp"
 
 class TempRegulator : public Device {

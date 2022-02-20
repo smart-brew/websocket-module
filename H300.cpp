@@ -176,10 +176,10 @@ void H300::set_motion(String type) {
 }
 
 void H300::executeFunction(JsonDocument& obj) {
-  if (obj["params"].isNull()) return;
+  if (obj["param"].isNull()) return;
 
   String instruction = obj["instruction"];
-  const char* value = obj["params"];
+  const char* value = obj["param"];
 
   if (instruction.equals("SET_MOTOR_SPEED")) {
     set_motion("FWD");

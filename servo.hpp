@@ -26,4 +26,5 @@ class ServoMotor : public Device {
 
   ServoMotor(int pin, String sensorName);
   void write(int angle);
+  void updateStatus();
 };
