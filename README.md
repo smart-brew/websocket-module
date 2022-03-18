@@ -27,10 +27,10 @@
 - OneWire by Jim Studt
   - IMPORTANT: to fix 'rtc_gpio_desc' error visit: https://githubmemory.com/repo/PaulStoffregen/OneWire/issues/100
     **or** _Find 'rtc_gpio_desc' replace with 'rtc_io_desc' in the 'OneWire_direct_gpio.h' file solved the issue_
-- ModbusMaster from https://www.arduino.cc/reference/en/libraries/modbusmaster/
+- ModbusMaster (2.0.1) from https://www.arduino.cc/reference/en/libraries/modbusmaster/
 - Arduino-Temperature-Control-Library from https://github.com/milesburton/Arduino-Temperature-Control-Library
 
 ## Debugging help
 
-Error during upload to **some** ESP boards - TIMED_OUT - press (5 sec) BOOT button on ESP during upload
+Error during upload to **some** ESP boards - TIMED_OUT - press (1 sec) BOOT button on ESP during upload
 https://randomnerdtutorials.com/solved-failed-to-connect-to-esp32-timed-out-waiting-for-packet-header/
