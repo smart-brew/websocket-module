@@ -19,7 +19,7 @@ void H300::init() {
   digitalWrite(MAX485_DE, 0);
 
   // Modbus communication through hardware bus
-  serial_bus.begin(baud_rate, SERIAL_8N1);
+  // serial_bus.begin(baud_rate, SERIAL_8N1);
   node.begin(unit_id, serial_bus);
 
   // Callbacks allow us to configure the RS485 transceiver correctly

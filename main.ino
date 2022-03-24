@@ -101,11 +101,15 @@ void boot() {
   Serial.println();
   Serial.println();
 
+  Serial2.begin(SERIAL2_BAUD, SERIAL_8N1);
+
   for (uint8_t t = 4; t > 0; t--) {
     Serial.printf("[SETUP] BOOT WAIT %d...\n", t);
     Serial.flush();
     delay(1000);
   }
+
+  Serial2.flush();
 }
 
 void webSocketEvent(WStype_t type, uint8_t* payload, size_t length) {
