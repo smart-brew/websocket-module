@@ -19,7 +19,10 @@
 #define RELAY_TX 16
 #define RELAY_RX 17
 
-#define H300_TX 10
-#define H300_RX 11
+// #define H300_TX 10
+// #define H300_RX 11
+
+#define MAX485_DE 5
+#define MAX485_RE_NEG 18
 
 #endif  // CONFIG_H

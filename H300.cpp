@@ -4,23 +4,14 @@
 
 #include "H300.hpp"
 
-H300::H300(const std::string device_id, const uint8_t unit_id, const uint32_t poll_rate, uint8_t RX, uint8_t TX, String _name)
-    : device_id(device_id), unit_id(unit_id), poll_rate(poll_rate) {
-  iteration_counter = poll_rate;
+H300::H300(const uint8_t slave_id, String _name) : slave_id(slave_id) {
   name = _name;
 }
 
 void H300::init() {
-  pinMode(MAX485_RE_NEG, OUTPUT);
-  pinMode(MAX485_DE, OUTPUT);
-
-  // Init in receive mode
-  digitalWrite(MAX485_RE_NEG, 0);
-  digitalWrite(MAX485_DE, 0);
-
   // Modbus communication through hardware bus
   // serial_bus.begin(baud_rate, SERIAL_8N1);
-  node.begin(unit_id, serial_bus);
+  node.begin(slave_id, serial_bus);
 
   // Callbacks allow us to configure the RS485 transceiver correctly
   node.preTransmission(pre_transmission);
@@ -37,33 +28,34 @@ void H300::post_transmission() {
   digitalWrite(MAX485_DE, 0);
 }
 
-// Write value to holding register
+/**
+ * @brief Writes value to register
+ *
+ * @param register_addr Register to write
+ * @param value Value to write
+ * @return Code of modbus request (0x00 for success)
+ */
 uint8_t H300::write_value(const uint16_t register_addr, const uint16_t value) const {
   return node.writeSingleRegister(register_addr, value);
 }
 
-// Read value from holding register
+/**
+ * @brief Reads value from register and saves it to response
+ *
+ * @param register_addr Register to read
+ * @param response Return value
+ * @return Code of modbus request (0x00 for success)
+ */
 uint8_t H300::read_value(const uint16_t register_addr, uint16_t* const response) const {
-  const uint8_t result = node.readHoldingRegisters(register_addr, 1);
+  const uint8_t code = node.readHoldingRegisters(register_addr, 1);
 
   Serial.print("H300::read_value (response_code): ");
-  Serial.println(result);
+  Serial.println(code);
 
-  if (result == node.ku8MBSuccess)
+  if (code == node.ku8MBSuccess)
     *response = node.getResponseBuffer(0);
 
-  return result;
-}
-
-bool H300::decrease_counter() {
-  iteration_counter--;
-
-  if (iteration_counter == 0) {
-    iteration_counter = poll_rate;
-    return true;
-  }
-
-  return false;
+  return code;
 }
 
 float H300::get() {

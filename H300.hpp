@@ -22,8 +22,6 @@ class H300 : public Device {
 
   static constexpr unsigned long baud_rate = 19200;
   static constexpr HardwareSerial& serial_bus = Serial2;
-  static constexpr uint8_t MAX485_DE = 5;
-  static constexpr uint8_t MAX485_RE_NEG = 18;
 
   static void pre_transmission();
   static void post_transmission();
@@ -31,9 +29,7 @@ class H300 : public Device {
   uint32_t iteration_counter;
 
  public:
-  const std::string device_id;
-  const uint8_t unit_id;
-  const uint32_t poll_rate;
+  const uint8_t slave_id;
 
   static constexpr uint16_t speed_register = 0x1000;  // writable
   static constexpr uint16_t state_register = 0x8000;
@@ -46,10 +42,9 @@ class H300 : public Device {
   static constexpr uint16_t get_timer_register = 0x1015;
   static constexpr uint16_t set_timer_register = 0xF82C;  // writable
 
-  H300(const std::string device_id, const uint8_t unit_id, const uint32_t poll_rate, uint8_t RX, uint8_t TX, String name);
+  H300(const uint8_t slave_id, String name);
   uint8_t write_value(const uint16_t register_addr, const uint16_t value) const;
   uint8_t read_value(const uint16_t register_addr, uint16_t* const response) const;
-  bool decrease_counter();
   void set_motion(String type);
 
   // interface Device

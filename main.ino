@@ -5,6 +5,7 @@
 
 #include "H300.hpp"
 #include "config/config.hpp"
+#include "cryostat.hpp"
 #include "device.hpp"
 #include "relay.hpp"
 #include "servo.hpp"
@@ -15,14 +16,13 @@
 #include "wifi.hpp"
 
 // ---------- CREATE DEVICE OBJECTS HERE ----------------------
-RelayModule relay("RELAY_1");
-ServoMotor servoMotor(27, "SERVO_1");
-TempSensor tempSensor(SENSOR_TEMP_PIN);
-TempRegulator tempRegulator("TEMP_2", tempSensor);
+// RelayModule relay("RELAY_1");
+// ServoMotor servoMotor(27, "SERVO_1");
+// TempSensor tempSensor(SENSOR_TEMP_PIN);
+// TempRegulator tempRegulator("TEMP_2", tempSensor);
 Timer timer("TIMER");
 
-const std::string id = "device-id";
-H300 motor(id, 1, 2000, H300_RX, H300_TX, "MOTOR_1");
+H300 motor(1, "MOTOR_1");
 // ------------------------------------------------------------
 
 static std::vector<std::reference_wrapper<Device>> devices;
@@ -36,10 +36,11 @@ void setup() {
   boot();
 
   // --- ADD ALL SENSORS TO ARRAY ---
-  devices.push_back(servoMotor);
-  devices.push_back(tempRegulator);
+  // devices.push_back(servoMotor);
+  // devices.push_back(tempRegulator);
   devices.push_back(timer);
-  devices.push_back(relay);
+  devices.push_back(motor);
+  // devices.push_back(relay);
   // --------------------------------
 
   for (Device& device : devices) {
@@ -47,7 +48,7 @@ void setup() {
   }
 
   // start relay
-  startRelay();
+  // startRelay();
 
   // wifi login
   wifi.start();
@@ -110,6 +111,14 @@ void boot() {
   }
 
   Serial2.flush();
+
+  // Pinout for MAX485
+  pinMode(MAX485_RE_NEG, OUTPUT);
+  pinMode(MAX485_DE, OUTPUT);
+
+  // Init in receive mode
+  digitalWrite(MAX485_RE_NEG, 0);
+  digitalWrite(MAX485_DE, 0);
 }
 
 void webSocketEvent(WStype_t type, uint8_t* payload, size_t length) {
