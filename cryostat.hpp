@@ -3,6 +3,7 @@
 #include <Arduino.h>
 #include <ESP32Servo.h>  // download from: https://github.com/madhephaestus/ESP32Servo
 
+#include "config/config.hpp"
 #include "device.hpp"
 
 // for cryostat Julabo CF41
@@ -12,8 +13,10 @@ class Cryostat : public Device {
   String category = "TEMPERATURE";
   int status = DEVICE_WAITING;
 
-  static constexpr unsigned long baud_rate = 19200;
   static constexpr HardwareSerial& serial_bus = Serial2;
+
+  static void pre_transmission();
+  static void post_transmission();
 
   // list of important commands supported by CF41
   // because we use RS485 we need to send "A032_" register address before each command

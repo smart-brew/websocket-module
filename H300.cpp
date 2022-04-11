@@ -10,7 +10,6 @@ H300::H300(const uint8_t slave_id, String _name) : slave_id(slave_id) {
 
 void H300::init() {
   // Modbus communication through hardware bus
-  // serial_bus.begin(baud_rate, SERIAL_8N1);
   node.begin(slave_id, serial_bus);
 
   // Callbacks allow us to configure the RS485 transceiver correctly

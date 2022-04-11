@@ -20,7 +20,6 @@ class H300 : public Device {
 
   mutable ModbusMaster node;
 
-  static constexpr unsigned long baud_rate = 19200;
   static constexpr HardwareSerial& serial_bus = Serial2;
 
   static void pre_transmission();

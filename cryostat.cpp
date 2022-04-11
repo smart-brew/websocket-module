@@ -5,10 +5,6 @@ Cryostat::Cryostat(String sensorName) {
 }
 
 void Cryostat::init() {
-  if (serial_bus.available()) {
-    serial_bus.begin(baud_rate, SERIAL_8N1);
-  }
-
   Serial.println("[cryostat] ready");
 }
 
@@ -61,6 +57,8 @@ void Cryostat::updateStatus() {
 }
 
 String Cryostat::sendCommand(String command) {
+  pre_transmission();
+
   // send command to CF41
   serial_bus.write(command.c_str() + '\x0d');
 
@@ -73,9 +71,20 @@ String Cryostat::sendCommand(String command) {
   String response = serial_bus.readStringUntil('\x0a');
   Serial.printf("[cryostat] response: %s\n", response.c_str());
 
+  post_transmission();
   return response;
 }
 
 void Cryostat::setTemperature(int param) {
   sendCommand(set_temp_command + param);
+}
+
+void Cryostat::pre_transmission() {
+  digitalWrite(MAX485_RE_NEG, 1);
+  digitalWrite(MAX485_DE, 1);
+}
+
+void Cryostat::post_transmission() {
+  digitalWrite(MAX485_RE_NEG, 0);
+  digitalWrite(MAX485_DE, 0);
 }
