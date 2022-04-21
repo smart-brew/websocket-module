@@ -4,29 +4,31 @@
 
 1. Rename `config (TEMPLATE).h` to `config.hpp` with correct settings
 
-2. To use ESP32 with arduino IDE follow this manual:
+1. To use ESP32 with arduino IDE follow this manual:
    https://docs.espressif.com/projects/arduino-esp32/en/latest/installing.html
    arduino.additionalUrls
 
    **Or** use VSCode (recommended for better IntelliSense) with Arduino extension (needs similar config as Arduino IDE)
 
-3. Update `c_cpp_properties.json` with your path
+1. Use ESP32 Dev Module as selected board. Dont forget to set correct COM port.
 
-```json
-"env": {
-   "pathToArduino": "your\\path\\to\\arduino",
-   "pathToLib": "your\\path\\to\\lib"
-},
-```
+1. Update `c_cpp_properties.json` with your path
 
-4. Install libraries
+   ```json
+   "env": {
+      "pathToArduino": "your\\path\\to\\arduino",
+      "pathToLib": "your\\path\\to\\lib"
+   },
+   ```
+
+1. Install libraries
 
 - ArduinoJson by Benoit Blanchon
 - WebSockets by Markus Sattler
 - ESP32Servo by John K.
 - OneWire by Jim Studt
-  - IMPORTANT: to fix 'rtc_gpio_desc' error visit: https://githubmemory.com/repo/PaulStoffregen/OneWire/issues/100
-    **or** _Find 'rtc_gpio_desc' replace with 'rtc_io_desc' in the 'OneWire_direct_gpio.h' file solved the issue_
+  - IMPORTANT: to fix 'rtc\_gpio\_desc' error visit: https://githubmemory.com/repo/PaulStoffregen/OneWire/issues/100
+    **or** _Find 'rtc\_gpio\_desc' replace with 'rtc\_io\_desc' in the 'OneWire\_direct\_gpio.h' file solved the issue_
 - ModbusMaster (2.0.1) from https://www.arduino.cc/reference/en/libraries/modbusmaster/
 - Arduino-Temperature-Control-Library from https://github.com/milesburton/Arduino-Temperature-Control-Library
 
