@@ -42,12 +42,12 @@ void ServoMotor::executeFunction(JsonDocument& obj) {
   String instruction = obj["instruction"];
 
   // SET_ANGLE
-  if (instruction.equals("SET_ANGLE") && !obj["param"].isNull()) {
+  if (instruction.equals("SET_ANGLE") && !obj["params"].isNull()) {
     status = DEVICE_IN_PROGRESS;
 
-    Serial.printf("SET_ANGLE %d\n", obj["param"].as<int>());
+    Serial.printf("SET_ANGLE %d\n", obj["params"].as<int>());
 
-    write(obj["param"].as<int>());
+    write(obj["params"].as<int>());
   }
 }
 

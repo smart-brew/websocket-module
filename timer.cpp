@@ -55,8 +55,8 @@ void Timer::executeFunction(JsonDocument& obj) {
   String instruction = obj["instruction"];
 
   // WAIT
-  if (instruction.equals("WAIT") && !obj["param"].isNull()) {
-    length = obj["param"].as<int32_t>();
+  if (instruction.equals("WAIT") && !obj["params"].isNull()) {
+    length = obj["params"].as<int32_t>();
     gettimeofday(&start, NULL);  // get current time
     status = DEVICE_IN_PROGRESS;
   }

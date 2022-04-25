@@ -37,11 +37,11 @@ void TempRegulator::executeFunction(JsonDocument& obj) {
   String instruction = obj["instruction"];
 
   // SET_TEMPERATURE
-  if (instruction.equals("SET_TEMPERATURE") && !obj["param"].isNull()) {
+  if (instruction.equals("SET_TEMPERATURE") && !obj["params"].isNull()) {
     enabled = true;
     status = DEVICE_IN_PROGRESS;
 
-    tempTarget = obj["param"].as<float>();
+    tempTarget = obj["params"].as<float>();
 
     if (get() < tempTarget) {
       tempRaise = true;

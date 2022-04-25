@@ -23,6 +23,7 @@
 Timer timer("TIMER");
 
 H300 motor(1, "MOTOR_1");
+H300 motor2(2, "MOTOR_2");
 // ------------------------------------------------------------
 
 static std::vector<std::reference_wrapper<Device>> devices;
@@ -40,6 +41,7 @@ void setup() {
   // devices.push_back(tempRegulator);
   devices.push_back(timer);
   devices.push_back(motor);
+  devices.push_back(motor2);
   // devices.push_back(relay);
   // --------------------------------
 
@@ -73,7 +75,7 @@ void loop() {
     // create json object
     DynamicJsonDocument data(1024);
     data["moduleId"] = MODULE_ID;
-    data["status"] = "OK";
+    data["STATUS"] = "OK";
 
     // get all data from all devices
     for (Device& device : devices) {
@@ -85,8 +87,8 @@ void loop() {
       // add data
       JsonObject deviceData = data[device.getCategory()].createNestedObject();
       device.appendJsonValues(deviceData);
-      deviceData["device"] = device.getName();
-      deviceData["status"] = device.getStatus();
+      deviceData["DEVICE"] = device.getName();
+      deviceData["STATUS"] = device.getStatus();
     }
 
     // send json using WS
@@ -156,13 +158,13 @@ void webSocketEvent(WStype_t type, uint8_t* payload, size_t length) {
 
       // instruction
       if (type.equals("instruction") &&
-          !data["device"].isNull() &&
+          !data["DEVICE"].isNull() &&
           !data["category"].isNull() &&
           !data["instruction"].isNull()) {
         for (Device& device : devices) {
           // check if matches device
           if (device.getCategory().equals(data["category"].as<const char*>()) &&
-              device.getName().equals(data["device"].as<const char*>())) {
+              device.getName().equals(data["DEVICE"].as<const char*>())) {
             device.executeFunction(data);
           }
         }

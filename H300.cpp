@@ -71,7 +71,7 @@ void H300::appendJsonValues(JsonObject& obj) {
   if (!read_value(speed_register, &speed)) {
     float speed_res = float(speed) / 10;
 
-    obj["speed"] = speed_res;
+    obj["SPEED"] = speed_res;
     Serial.println(String("\tSPEED:\t") + speed_res);
   }
 
@@ -96,7 +96,7 @@ void H300::appendJsonValues(JsonObject& obj) {
     Serial.println(String("\tGET_FREQ:\t") + get_freq_res);
 
     float rpm_res = (get_freq_res * 60 * 2) / 4;
-    obj["rpm"] = rpm_res;
+    obj["RPM"] = rpm_res;
     Serial.println(String("\tRPM:\t") + rpm_res);
   }
 
@@ -170,10 +170,12 @@ void H300::set_motion(String type) {
 }
 
 void H300::executeFunction(JsonDocument& obj) {
-  if (obj["param"].isNull()) return;
+  if (obj["params"].isNull()) return;
 
   String instruction = obj["instruction"];
-  const char* value = obj["param"];
+  const char* value = obj["params"];
+
+  Serial.print(instruction);
 
   if (instruction.equals("SET_MOTOR_SPEED")) {
     set_motion("FWD");

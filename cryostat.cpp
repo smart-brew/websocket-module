@@ -34,11 +34,11 @@ void Cryostat::executeFunction(JsonDocument& obj) {
   String instruction = obj["instruction"];
 
   // SET_ANGLE
-  if (instruction.equals("SET_TEMPERATURE") && !obj["param"].isNull()) {
+  if (instruction.equals("SET_TEMPERATURE") && !obj["params"].isNull()) {
     status = DEVICE_IN_PROGRESS;
 
-    Serial.printf("SET_TEMPERATURE %d\n", obj["param"].as<int>());
-    setTemperature(obj["param"].as<int>());
+    Serial.printf("SET_TEMPERATURE %d\n", obj["params"].as<int>());
+    setTemperature(obj["params"].as<int>());
   }
 }
 
