@@ -7,8 +7,10 @@
 #include "config/config.hpp"
 #include "cryostat.hpp"
 #include "device.hpp"
+#include "pinEnabler.hpp"
 #include "relay.hpp"
 #include "servo.hpp"
+#include "simpleRelay.hpp"
 #include "tempLogic.hpp"
 #include "tempSensor.hpp"
 #include "timer.hpp"
@@ -22,8 +24,11 @@
 // TempRegulator tempRegulator("TEMP_2", tempSensor);
 Timer timer("TIMER");
 
-H300 motor(1, "MOTOR_1");
-H300 motor2(2, "MOTOR_2");
+PinEnabler pinEnabler(27);
+SimpleRelay motor("MOTOR_1", "MOTOR", pinEnabler);
+
+// H300 motor(1, "MOTOR_1");
+// H300 motor2(2, "MOTOR_2");
 // ------------------------------------------------------------
 
 static std::vector<std::reference_wrapper<Device>> devices;
@@ -41,7 +46,7 @@ void setup() {
   // devices.push_back(tempRegulator);
   devices.push_back(timer);
   devices.push_back(motor);
-  devices.push_back(motor2);
+  // devices.push_back(motor2);
   // devices.push_back(relay);
   // --------------------------------
 
