@@ -9,6 +9,7 @@ class SimpleRelay : public Device {
  private:
   String name;
   String category = "SYSTEM";
+  String instruction = "NONE";
   int status = DEVICE_WAITING;
 
   PinEnabler* pinEnabler;
@@ -23,6 +24,6 @@ class SimpleRelay : public Device {
   void appendJsonValues(JsonObject& obj);
   void executeFunction(JsonDocument& obj);
 
-  SimpleRelay(String deviceName, String _category, PinEnabler& _pinEnabler);
+  SimpleRelay(String deviceName, String _category, String _instruction, PinEnabler& _pinEnabler);
   void updateStatus();
 };

@@ -1,6 +1,7 @@
 #include "pinEnabler.hpp"
 
 void PinEnabler::init() {
+  Serial.printf("[pin enabler] init - %d\n", pin);
   pinMode(pin, OUTPUT);
 
   disable();

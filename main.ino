@@ -22,10 +22,14 @@
 // ServoMotor servoMotor(27, "SERVO_1");
 // TempSensor tempSensor(SENSOR_TEMP_PIN);
 // TempRegulator tempRegulator("TEMP_2", tempSensor);
-Timer timer("TIMER");
+Timer timer("");
 
-PinEnabler pinEnabler(27);
-SimpleRelay motor("MOTOR_1", "MOTOR", pinEnabler);
+PinEnabler pinEnabler25(25);
+PinEnabler pinEnabler26(26);
+PinEnabler pinEnabler27(27);
+SimpleRelay motor1("MOTOR_1", "MOTOR", "SET_MOTOR_SPEED", pinEnabler25);
+SimpleRelay motor2("MOTOR_2", "MOTOR", "SET_MOTOR_SPEED", pinEnabler26);
+SimpleRelay pump1("PUMP_1", "PUMP", "TRANSFER_LIQUIDS", pinEnabler27);
 
 // H300 motor(1, "MOTOR_1");
 // H300 motor2(2, "MOTOR_2");
@@ -45,8 +49,9 @@ void setup() {
   // devices.push_back(servoMotor);
   // devices.push_back(tempRegulator);
   devices.push_back(timer);
-  devices.push_back(motor);
-  // devices.push_back(motor2);
+  devices.push_back(motor1);
+  devices.push_back(motor2);
+  devices.push_back(pump1);
   // devices.push_back(relay);
   // --------------------------------
 
@@ -163,13 +168,13 @@ void webSocketEvent(WStype_t type, uint8_t* payload, size_t length) {
 
       // instruction
       if (type.equals("instruction") &&
-          !data["DEVICE"].isNull() &&
+          !data["device"].isNull() &&
           !data["category"].isNull() &&
           !data["instruction"].isNull()) {
         for (Device& device : devices) {
           // check if matches device
           if (device.getCategory().equals(data["category"].as<const char*>()) &&
-              device.getName().equals(data["DEVICE"].as<const char*>())) {
+              device.getName().equals(data["device"].as<const char*>())) {
             device.executeFunction(data);
           }
         }

@@ -1,9 +1,10 @@
 #include "simpleRelay.hpp"
 
-SimpleRelay::SimpleRelay(String deviceName, String _category, PinEnabler& _pinEnabler) {
+SimpleRelay::SimpleRelay(String deviceName, String _category, String _instruction, PinEnabler& _pinEnabler) {
   pinEnabler = &_pinEnabler;
   name = deviceName;
   category = _category;
+  instruction = _instruction;
 }
 
 void SimpleRelay::init() {
@@ -34,17 +35,19 @@ void SimpleRelay::appendJsonValues(JsonObject& obj) {
 }
 
 void SimpleRelay::executeFunction(JsonDocument& obj) {
-  String instruction = obj["instruction"];
+  String instructionMaster = obj["instruction"];
+  const char* value = obj["params"];
 
-  // ENABLE and DISABLE
-  if (instruction.equals("ENABLE")) {
+  Serial.println("[simple relay] execute function");
+
+  if (instructionMaster.equals(instruction)) {
     status = DEVICE_IN_PROGRESS;
 
-    pinEnabler->enable();
-  } else if (instruction.equals("DISABLE")) {
-    status = DEVICE_IN_PROGRESS;
-
-    pinEnabler->disable();
+    if (atof(value)) {
+      pinEnabler->enable();
+    } else {
+      pinEnabler->disable();
+    }
   }
 }
 

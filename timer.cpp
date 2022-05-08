@@ -21,7 +21,7 @@ String Timer::getCategory() {
 }
 
 int32_t Timer::getRemaining() {
-  int32_t diff = length - ((int32_t)now.tv_sec - (int32_t)start.tv_sec);
+  int32_t diff = length - ((int32_t)now.tv_usec - (int32_t)start.tv_usec);
 
   if (diff < 0)
     return 0;
