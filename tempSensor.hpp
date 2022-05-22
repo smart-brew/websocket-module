@@ -27,5 +27,5 @@ class TempSensor : public Device {
   void appendJsonValues(JsonObject& obj);
   void executeFunction(JsonDocument& obj);
 
-  TempSensor(int pin);
+  TempSensor(String name, int pin);
 };

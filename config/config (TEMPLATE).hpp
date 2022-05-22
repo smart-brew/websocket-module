@@ -1,12 +1,16 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
-#define WIFI_SSID "wifi"
-#define WIFI_PWD "password"
-#define MODULE_ID 1
+#define WIFI_SSID "PETO-NB"
+#define WIFI_PWD "wE3040-3"
+// #define WIFI_SSID "rpiWifi"
+// #define WIFI_PWD "tp062122"
 
-#define WS_HOST "1.2.3.4"
-#define WS_PORT 1234
+// #define WS_HOST "10.20.1.1"
+#define WS_HOST "192.168.100.248"
+
+#define MODULE_ID 1
+#define WS_PORT 8001
 
 #define SERIAL2_BAUD 19200
 

@@ -18,21 +18,23 @@
 #include "wifi.hpp"
 
 // ---------- CREATE DEVICE OBJECTS HERE ----------------------
-// RelayModule relay("RELAY_1");
-// ServoMotor servoMotor(27, "SERVO_1");
-// TempSensor tempSensor(SENSOR_TEMP_PIN);
-// TempRegulator tempRegulator("TEMP_2", tempSensor);
 Timer timer("");
 
-PinEnabler pinEnabler25(25);
+TempSensor tempSensor("TEMP_1", 25);
+
+PinEnabler pinEnabler12(12);
+PinEnabler pinEnabler13(13);
+PinEnabler pinEnabler14(14);
 PinEnabler pinEnabler26(26);
 PinEnabler pinEnabler27(27);
-SimpleRelay motor1("MOTOR_1", "MOTOR", "SET_MOTOR_SPEED", pinEnabler25);
+SimpleRelay motor1("MOTOR_1", "MOTOR", "SET_MOTOR_SPEED", pinEnabler27);
 SimpleRelay motor2("MOTOR_2", "MOTOR", "SET_MOTOR_SPEED", pinEnabler26);
-SimpleRelay pump1("PUMP_1", "PUMP", "TRANSFER_LIQUIDS", pinEnabler27);
+SimpleRelay relay1("RELAY_1", "RELAY", "ENABLE_RELAY", pinEnabler13);
+SimpleRelay relay2("RELAY_2", "RELAY", "ENABLE_RELAY", pinEnabler12);
+SimpleRelay relay3("RELAY_3", "RELAY", "ENABLE_RELAY", pinEnabler14);
 
-// H300 motor(1, "MOTOR_1");
-// H300 motor2(2, "MOTOR_2");
+H300 h300motor(1, "MOTOR_1");
+H300 h300motor2(2, "MOTOR_2");
 // ------------------------------------------------------------
 
 static std::vector<std::reference_wrapper<Device>> devices;
@@ -46,13 +48,18 @@ void setup() {
   boot();
 
   // --- ADD ALL SENSORS TO ARRAY ---
-  // devices.push_back(servoMotor);
-  // devices.push_back(tempRegulator);
   devices.push_back(timer);
+
+  devices.push_back(tempSensor);
+
   devices.push_back(motor1);
   devices.push_back(motor2);
-  devices.push_back(pump1);
-  // devices.push_back(relay);
+  // devices.push_back(h300motor);
+  // devices.push_back(h300motor2);
+
+  devices.push_back(relay1);
+  devices.push_back(relay2);
+  devices.push_back(relay3);
   // --------------------------------
 
   for (Device& device : devices) {

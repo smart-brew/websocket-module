@@ -4,6 +4,8 @@
 
 1. Rename `config (TEMPLATE).h` to `config.hpp` with correct settings
 
+1. In `main.ino` create all devices and add them to device list
+
 1. To use ESP32 with arduino IDE follow this manual:
    https://docs.espressif.com/projects/arduino-esp32/en/latest/installing.html
    arduino.additionalUrls
@@ -36,3 +38,13 @@
 
 Error during upload to **some** ESP boards - TIMED_OUT - press (1 sec) BOOT button on ESP during upload
 https://randomnerdtutorials.com/solved-failed-to-connect-to-esp32-timed-out-waiting-for-packet-header/
+
+## Schemas
+
+![temp](./schemas/tempsenzor.png)
+
+_\*With DS18B20 you can add multiple sensors to same pins because OneWire_
+
+![h300](./schemas/h300.png)
+
+_\*With H300 we also had to add 1k resistors between A-VIN and B-GND_

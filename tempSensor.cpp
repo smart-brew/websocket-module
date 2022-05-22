@@ -1,7 +1,8 @@
 #include "tempSensor.hpp"
 
-TempSensor::TempSensor(int pin) {
+TempSensor::TempSensor(String _name, int pin) {
   sensorPin = pin;
+  name = _name;
 }
 
 void TempSensor::init() {
@@ -31,7 +32,12 @@ float TempSensor::get() {
 
 void TempSensor::appendJsonValues(JsonObject& obj) {
   dallasTempSensors.requestTemperatures();
-  obj["temp"] = dallasTempSensors.getTempCByIndex(0);
+
+  int count = dallasTempSensors.getDeviceCount();
+
+  for (int i = 0; i < count; i++) {
+    obj["temp" + String(i)] = dallasTempSensors.getTempCByIndex(i);
+  }
 }
 
 void TempSensor::executeFunction(JsonDocument& obj) {}
